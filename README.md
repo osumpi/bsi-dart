@@ -1,22 +1,29 @@
-A library for Dart developers.
+## BakeCode Services Interconnect Layer - Dart API 
+BSI can be used to interact w/ a BakeCode Ecosystem.
+    
+    Copyright (C) 2020  RITHVIK NISHAD
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
 ## Usage
 
-A simple usage example:
-
 ```dart
-import 'package:bsi_dart/bsi_dart.dart';
+void main() async {
 
-main() {
-  var awesome = new Awesome();
+  // Get the config from bakecode.yaml as map and read the 'MQTT' map.
+  var config = getConnectionConfig();
+
+  // Initialize the BSI layer using the config
+  await BSI.instance.init(config);
+
+  // BSI shall now be ready for use.
 }
 ```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
