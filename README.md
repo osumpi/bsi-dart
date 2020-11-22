@@ -1,6 +1,4 @@
-# BakeCode Services Interconnect Layer (
-
-API)
+# BakeCode Services Interconnect Layer (Dart API)
 
 BSI can be used to interact w/ a BakeCode Ecosystem.
     
