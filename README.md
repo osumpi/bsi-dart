@@ -1,4 +1,6 @@
-# BakeCode Services Interconnect Layer (dart API)
+# BakeCode Services Interconnect Layer (
+
+API)
 
 BSI can be used to interact w/ a BakeCode Ecosystem.
     
@@ -14,10 +16,10 @@ BSI can be used to interact w/ a BakeCode Ecosystem.
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-### To use BSI dart API
+### To use BSI Dart API
 
 #### 1. Add submodule
-Add the repo as submodule to your dart project's directory.
+Add the repo as submodule to your Dart project's directory.
 ```sh
 $ git submodule add https://github.com/crysalisdevs/bsi-dart.git
 ```
