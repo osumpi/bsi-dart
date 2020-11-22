@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:bsi_dart/src/comms/bsi.dart';
-
+import '../../../bsi_dart.dart';
 import '../../logger.dart';
+import 'mqtt_connection.dart';
 import 'package:meta/meta.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';

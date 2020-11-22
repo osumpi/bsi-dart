@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:bsi_dart/src/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 import '../../bsi_dart.dart';
+import '../logger.dart';
 
 export 'broadcast_service.dart';
 export 'mqtt/mqtt.dart';
