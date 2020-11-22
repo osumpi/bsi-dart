@@ -1,0 +1,15 @@
+name: bsi_dart
+description: BakeCode Services Interconnect - Dart API
+version: 0.0.2-alpha
+homepage: https://github.com/crysalisdevs/bsi-dart
+
+environment:
+  sdk: '>=2.8.1 <3.0.0'
+
+dependencies:
+  meta:
+  mqtt_client:
+  logger:
+  equatable:
+
+dev_dependencies:
