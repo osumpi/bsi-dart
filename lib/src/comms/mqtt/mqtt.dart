@@ -59,8 +59,17 @@ class Mqtt {
           .withWillQos(qos)
           .withWillRetain()
           .withClientIdentifier(client.clientIdentifier)
-          .withWillMessage('offline')
-          //TODO: .withWillTopic('${BakeCode.instance.reference}')
+          .withWillMessage(
+            ServiceMessage(
+                    source: using.service,
+                    destinations: [
+                      using.service,
+                      BroadcastService.instance.reference,
+                    ],
+                    message: 'offline')
+                .toString(),
+          )
+          .withWillTopic('${using.service}')
           .authenticateAs(
             using.authentication_username,
             using.authentication_password,

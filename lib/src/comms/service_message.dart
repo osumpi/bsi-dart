@@ -136,6 +136,5 @@ class ServiceMessage {
     "source": "$source",
     "destinations": $destinations,
     "message": "$message",
-  }
-  """;
+  }""";
 }

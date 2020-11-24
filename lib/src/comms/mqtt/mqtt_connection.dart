@@ -1,3 +1,5 @@
+import 'package:bsi_dart/bsi_dart.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 // TODO: add certificate propoerty, secure TLS/SSL socket connection.
@@ -5,6 +7,7 @@ import 'package:meta/meta.dart';
 /// This class contains all parameters required for establishing a mqtt
 /// connection to the broker.
 @immutable
+@JsonSerializable(nullable: false)
 class MqttConnection {
   /// The brokers address.
   ///
@@ -38,6 +41,20 @@ class MqttConnection {
   /// ```
   final String authentication_password;
 
+  /// The [service] that attempts to make the connection.
+  ///
+  /// Used for setting up willMessage and willTopic.
+  ///
+  /// The generated will [ServiceMessage] shall be in the format:
+  /// ```dart
+  /// ServiceMessage(
+  ///   source: service,
+  ///   destinations: [ service, broadcast ],
+  ///   message: 'offline'
+  /// );
+  /// ```
+  final ServiceReference service;
+
   /// Create instance of MqttConnection from specified data.
   ///
   /// * Address of [broker]. eg: `"192.168.0.7"`.
@@ -45,25 +62,12 @@ class MqttConnection {
   /// * Authentication credentials can be specified using
   /// [authentication_username] & [authentication_password].
   const MqttConnection.from({
+    @required this.service,
     @required this.broker,
     this.port = 1883,
     this.authentication_username = '',
     this.authentication_password = '',
   });
-
-  factory MqttConnection.fromMap(dynamic data) {
-    try {
-      return MqttConnection.from(
-        broker: data['broker'],
-        port: data['port'],
-        authentication_username: data['username'],
-        authentication_password: data['password'],
-      );
-    } catch (e) {
-      throw FormatException(
-          "Error reading MQTT configuration from Map<String, dynamic>", data);
-    }
-  }
 
   /// Returns true if authentication credentials are specified.
   bool get hasAuthentication =>
@@ -76,6 +80,5 @@ class MqttConnection {
     "port": $port,
     "authentication_username": "$authentication_username",
     "authentication_password": "$authentication_password",
-  }
-  """;
+  }""";
 }
