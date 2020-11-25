@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 import '../../bsi_dart.dart';
 
 export 'reference.dart';
-export 'states.dart';
 
 abstract class Service {
   /// Default constructor for [Service].
