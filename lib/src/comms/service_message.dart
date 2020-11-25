@@ -17,7 +17,7 @@ class ServiceMessage {
   final ServiceReference source;
 
   /// Recipient service references of the message.
-  final List<ServiceReference> destinations;
+  final Iterable<ServiceReference> destinations;
 
   /// The message as string.
   final String message;
@@ -100,13 +100,13 @@ class ServiceMessage {
   /// `message` may or may not be a JSON object, however from the view of
   /// [ServiceMessage] it is represented as String.
   factory ServiceMessage.fromJSONString(String packet) {
-    var p = jsonDecode(packet);
-
     try {
+      var p = jsonDecode(packet);
+
       return ServiceMessage(
         source: ServiceReference.fromString(p['source']),
-        destinations:
-            p['destination'].map((d) => ServiceReference.fromString(d)),
+        destinations: (p['destination'] as Iterable<String>)
+            .map((d) => ServiceReference.fromString(d)),
         message: p['message'].toString(),
       );
     } catch (e) {
@@ -131,10 +131,9 @@ class ServiceMessage {
   /// }
   /// ```
   @override
-  String toString() => """
-  {
-    "source": "$source",
-    "destinations": $destinations,
-    "message": "$message",
-  }""";
+  String toString() => jsonEncode({
+        "source": source.toString(),
+        "destinations": destinations.map<String>((e) => '$e').toList(),
+        "message": message,
+      });
 }
