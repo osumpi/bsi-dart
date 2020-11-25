@@ -126,7 +126,7 @@ void main() async {
 }
 ```
 
-### 2.3 Sending and receiving messages
+#### 2.3 Sending and receiving messages
 
 Every service instance will have `notify`, `notifyAll` and `broadcast`
 function, which shall allow the service to send messages to a target
