@@ -117,6 +117,7 @@ class ServiceMessage {
 
       Ignoring packet.
       """);
+      return null;
     }
   }
 

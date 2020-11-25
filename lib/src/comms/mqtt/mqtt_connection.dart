@@ -3,8 +3,9 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 // TODO: add certificate propoerty, secure TLS/SSL socket connection.
+// TODO: do JsonSerializable
 
-/// This class contains all parameters required for establishing a mqtt
+/// This class contains all parameters required for establishing a MQTT
 /// connection to the broker.
 @immutable
 @JsonSerializable(nullable: false)
@@ -76,7 +77,7 @@ class MqttConnection {
   @override
   String toString() => """
   {
-    "server": "$broker",
+    "broker": "$broker",
     "port": $port,
     "authentication_username": "$authentication_username",
     "authentication_password": "$authentication_password",

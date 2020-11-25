@@ -41,6 +41,7 @@ abstract class Service {
   /// Publishes a [message] on [topic].
   /// By default [topic] is [path].
   @mustCallSuper
+  @nonVirtual
   void notify(ServiceReference to, {@required String message}) =>
       BSI.instance.outbox.add(ServiceMessage(
           source: reference, destinations: [to], message: message));
