@@ -83,7 +83,8 @@ class ServiceMessage {
         message: message,
       );
 
-  /// Creates a ServiceMessage packet from json string.
+  /// Creates a ServiceMessage packet from the string representation of
+  /// the [packet] ServiceMessage.
   ///
   /// Note that this does not send the message. [ServiceMessage] is only
   /// intended to represent a BSI packet.
@@ -99,42 +100,56 @@ class ServiceMessage {
   /// ```
   /// `message` may or may not be a JSON object, however from the view of
   /// [ServiceMessage] it is represented as String.
-  factory ServiceMessage.fromJSONString(String packet) {
+  factory ServiceMessage.fromJson(String packet) {
     try {
       var p = jsonDecode(packet);
-
       return ServiceMessage(
         source: ServiceReference.fromString(p['source']),
-        destinations: (p['destination'] as Iterable<String>)
+        destinations: (p['destinations'] as Iterable<String>)
             .map((d) => ServiceReference.fromString(d)),
         message: p['message'].toString(),
       );
     } catch (e) {
       log.e("""
-      $e
-      
-      Received packet as raw: $packet
+unable to jsonDecode received packet:
+$packet
 
-      Ignoring packet.
-      """);
+Reason:
+$e
+
+Action:
+Ignored the packet.""");
       return null;
     }
   }
 
-  /// The string representation of the JSON structured [ServiceMessage] packet.
+  /// JSON representation of the ServiceMessage packet.
   ///
   /// *Example:*
   /// ```json
   /// {
-  ///   "source": "bakecode",
-  ///   "destinations": ["bakecode/broadcast"],
-  ///   "message": "heartbeat --reply-to bakecode/hb/sessions/aU81l01kjL",
+  ///   "source": "<source>",
+  ///   "destinations": ["<dest0>", "<dest1>", ...],
+  ///   "message": "<message>",
+  /// }
+  /// ```
+  String toJson() => JsonEncoder.withIndent('  ').convert({
+        "source": '$source',
+        "destinations": destinations.map<String>((d) => '$d'),
+        "message": message,
+      });
+
+  /// The string representation of [ServiceMessage] is the Json representation.
+  /// Equivalent to [toJson].
+  ///
+  /// *Example:*
+  /// ```json
+  /// {
+  ///   "source": "<source>",
+  ///   "destinations": ["<dest0>", "<dest1>", ...],
+  ///   "message": "<message>",
   /// }
   /// ```
   @override
-  String toString() => jsonEncode({
-        "source": source.toString(),
-        "destinations": destinations.map<String>((e) => '$e').toList(),
-        "message": message,
-      });
+  String toString() => toJson();
 }

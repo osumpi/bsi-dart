@@ -78,5 +78,5 @@ class BSI {
       hookedServices.remove(service.reference)?.close();
 
   void onReceiveCallback(String topic, String packet) =>
-      hookedServices[topic]?.add(ServiceMessage.fromJSONString(packet));
+      hookedServices[topic]?.add(ServiceMessage.fromJson(packet));
 }
