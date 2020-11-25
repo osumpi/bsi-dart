@@ -2,10 +2,10 @@
 
 library bsi_dart;
 
-export 'src/comms/broadcast_service.dart';
-export 'src/comms/bsi.dart';
-export 'src/comms/service_message.dart';
-
-export 'src/comms/mqtt/mqtt.dart';
-
-export 'src/service/service.dart';
+export 'src/bsi.dart';
+export 'src/mqtt.dart';
+export 'src/mqtt_connection.dart';
+export 'src/reference.dart';
+export 'src/service.dart';
+export 'src/service_message.dart';
+export 'src/services.dart';

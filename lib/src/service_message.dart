@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:bsi_dart/src/logger.dart';
+import 'package:bsi_dart/bsi_dart.dart';
+import 'package:bsi_dart/vendor/logger.dart';
 import 'package:meta/meta.dart';
-
-import '../../bsi_dart.dart';
 
 /// This class represents a ServiceMessage packet interpretable by BakeCode
 /// Services by the BakeCode Services Interconnect Layer.
@@ -79,7 +78,7 @@ class ServiceMessage {
   }) =>
       ServiceMessage(
         source: source,
-        destinations: [BroadcastService().reference],
+        destinations: [Services.Broadcast],
         message: message,
       );
 
@@ -105,8 +104,8 @@ class ServiceMessage {
       var p = jsonDecode(packet);
       return ServiceMessage(
         source: ServiceReference.fromString(p['source']),
-        destinations: (p['destinations'] as Iterable<String>)
-            .map((d) => ServiceReference.fromString(d)),
+        destinations: (p['destinations'] as Iterable)
+            .map((d) => ServiceReference.fromString('$d')),
         message: p['message'].toString(),
       );
     } catch (e) {
@@ -135,7 +134,7 @@ Ignored the packet.""");
   /// ```
   String toJson() => JsonEncoder.withIndent('  ').convert({
         "source": '$source',
-        "destinations": destinations.map<String>((d) => '$d'),
+        "destinations": destinations.map<String>((d) => '$d').toList(),
         "message": message,
       });
 

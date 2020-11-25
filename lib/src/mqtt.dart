@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import '../../../bsi_dart.dart';
-import '../../logger.dart';
-import 'mqtt_connection.dart';
+import 'package:bsi_dart/bsi_dart.dart';
+import 'package:bsi_dart/vendor/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-
-export 'mqtt_connection.dart';
 
 @sealed
 class Mqtt {
@@ -64,7 +61,7 @@ class Mqtt {
                     source: using.service,
                     destinations: [
                       using.service,
-                      BroadcastService.instance.reference,
+                      Services.Broadcast,
                     ],
                     message: 'offline')
                 .toString(),

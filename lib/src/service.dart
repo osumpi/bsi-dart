@@ -1,10 +1,7 @@
 import 'dart:async';
 
+import 'package:bsi_dart/bsi_dart.dart';
 import 'package:meta/meta.dart';
-
-import '../../bsi_dart.dart';
-
-export 'reference.dart';
 
 abstract class Service {
   /// Default constructor for [Service].
