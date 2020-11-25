@@ -136,7 +136,7 @@ Example:
 
 ```dart
 
-var to = BakeCode.instance.reference;
+ServiceReference to = BakeCode.instance.reference;
 
 // (!) [notify] and [notifyAll] invocations shall be done inside the
 // service implementation as it's likely that it'll be protected in the
@@ -144,12 +144,12 @@ var to = BakeCode.instance.reference;
 
 MyService.notify(to, message: 'hey bakecode, sup!');
 
-var to = [
+Iterable<ServiceReference> toAll = [
   BakeCode.instance,
   DispenserHardware.instance,
 ].map((s) => s.reference);
 
-MyService.notifyAll(to, message: 'hey everyone, sup!');
+MyService.notifyAll(toAll, message: 'hey everyone, sup!');
 
 ```
 
