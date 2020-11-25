@@ -9,8 +9,8 @@ functionalities of and for SOA.
 
 ## Getting started
 
-This section shall discuss about implementing BSI layer in an
-application that requires communicating with a BakeCode Ecosystem.
+This section shall discuss implementing the BSI layer in an application
+that requires communicating with a BakeCode Ecosystem.
 
 ### 1. Installing
 
