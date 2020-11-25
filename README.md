@@ -55,9 +55,9 @@ import 'package:bsi_dart/bsi_dart.dart`;
 
 #### 2.1 Creating a Service
 
-The BakeCode Services Interconnect Layer, as the name itself suggests,
-its an interconnect of services and hence a Service has to be implemented
-before even we can attempt to initialize the BSI layer.
+BakeCode Services Interconnect Layer, as the name itself suggests,is
+an interconnect of services and hence a Service has to be implemented
+first, even before we can attempt to initialize the BSI layer.
 
 Services can be created by extending the `Service` class provided by the
 BSI package.
@@ -67,19 +67,19 @@ As an example:
 ```dart
 import 'package:bsi_dart/bsi_dart.dart';
 
-class MyAppService extends Service {
+class MyService extends Service {
   /// It is suggested that every application's top service is a singleton.
   /// However services that may have multiple instances shall not
   /// require the singleton implementation.
 
   /// The private generative constructor for singleton implementation.
-  MyAppService._();
+  MyService._();
 
   /// The singleton instance of MyAppService.
-  static final instance = MyAppService._();
+  static final instance = MyService._();
 
   /// Factory constructor that redirects to the singleton instance.
-  factory MyAppService() => instance;
+  factory MyService() => instance;
 
   /// The name shall follow MQTT topic guidelines, see API docs of
   /// ServiceReference.
@@ -109,7 +109,7 @@ void main() async {
 
   // Specify the MQTT connection parameters.
   var connection = MqttConnection.from(
-    service: MyAppService.instance.reference,
+    service: MyService.instance.reference,
     broker: "127.0.0.1",
     port: 1883,
     authentication_username: "ignore_if_no_authentication",
@@ -142,14 +142,14 @@ var to = BakeCode.instance.reference;
 // service implementation as it's likely that it'll be protected in the
 // future.
 
-MyAppService.notify(to, message: 'hey bakecode, sup!');
+MyService.notify(to, message: 'hey bakecode, sup!');
 
 var to = [
   BakeCode.instance,
   DispenserHardware.instance,
 ].map((s) => s.reference);
 
-MyAppService.notifyAll(to, message: 'hey everyone, sup!');
+MyService.notifyAll(to, message: 'hey everyone, sup!');
 
 ```
 
@@ -161,7 +161,7 @@ The stream is of type: `ServiceMessage` and hence `source`, `destination`,
 and `message` is preserved.
 
 ```dart
-MyAppService.onReceive.listen(print);
+MyService.onReceive.listen(print);
 ```
 
 The above shall print the received messages in the format:
