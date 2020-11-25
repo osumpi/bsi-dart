@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 import '../../bsi_dart.dart';
 
 export 'reference.dart';
-export 'states.dart';
 
 abstract class Service {
   /// Default constructor for [Service].
@@ -38,12 +37,16 @@ abstract class Service {
   void broadcast(String message) => BSI.instance.outbox
       .add(ServiceMessage.asBroadcast(source: reference, message: message));
 
-  /// Publishes a [message] on [topic].
-  /// By default [topic] is [path].
-  @mustCallSuper
+  /// Sends the [message] [to] the service.
+  @nonVirtual
   void notify(ServiceReference to, {@required String message}) =>
       BSI.instance.outbox.add(ServiceMessage(
           source: reference, destinations: [to], message: message));
+
+  /// Sends the [message] to every service specified in [to].
+  void notifyAll(Iterable<ServiceReference> to, {@required String message}) =>
+      BSI.instance.outbox.add(ServiceMessage(
+          source: reference, destinations: to, message: message));
 
   /// Sink of [_onReceiveController].
   StreamSink<ServiceMessage> get _onReceiveSink => _onReceiveController.sink;
