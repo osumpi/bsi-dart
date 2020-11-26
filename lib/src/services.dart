@@ -1,6 +1,8 @@
 import 'package:bsi_dart/bsi_dart.dart';
 
 abstract class Services {
+  Services._();
+
   /// The root [Service] of the **BakeCode Ecosystem**.
   ///
   /// It is strongly recommended that all services runs as a child or sub-child
