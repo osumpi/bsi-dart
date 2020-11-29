@@ -3,23 +3,23 @@ import 'dart:async';
 import 'package:bsi_dart/bsi_dart.dart';
 import 'package:meta/meta.dart';
 
-abstract class Service {
-  /// Default constructor for [Service].
+abstract class BakeCodeService {
+  /// Default constructor for [BakeCodeService].
   ///
   /// Registers onMessage stream controller's sink for listening to messages
   /// related to [context].
-  Service() {
+  BakeCodeService() {
     BSI.instance.hook(this, sink: _onReceiveSink);
   }
 
   /// Provides a handle for BakeCode services.
   ///
-  /// Path makes every [Service]s to be identifiable.
+  /// Path makes every [BakeCodeService]s to be identifiable.
   ServiceReference get reference;
 
   /// [ServiceReference] of the state of this service.
   ///
-  /// All [StateService] associated w/ a [Service] resides here.
+  /// All [StateService] associated w/ a [BakeCodeService] resides here.
   ServiceReference get state => reference.child('state');
 
   /// Exposes all incoming messages for this service.
