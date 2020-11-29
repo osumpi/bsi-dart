@@ -18,6 +18,11 @@ class ServiceMessage {
   /// Recipient service references of the message.
   final Iterable<ServiceReference> destinations;
 
+  /// The type of [ServiceMessage].
+  ///
+  /// TODO: add references to this doc.
+  final type = 'serviceMessage';
+
   /// The message as string.
   final String message;
 
@@ -110,14 +115,14 @@ class ServiceMessage {
       );
     } catch (e) {
       log.e("""
-unable to jsonDecode received packet:
-$packet
+        unable to jsonDecode received packet:
+        $packet
 
-Reason:
-$e
+        Reason:
+        $e
 
-Action:
-Ignored the packet.""");
+        Action:
+        Ignored the packet.""");
       return null;
     }
   }
@@ -151,4 +156,10 @@ Ignored the packet.""");
   /// ```
   @override
   String toString() => toJson();
+
+  ServiceMessage constructReplyMessage({
+    @required ServiceReference as,
+    @required String message,
+  }) =>
+      ServiceMessage(source: as, destinations: [source], message: message);
 }
