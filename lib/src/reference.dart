@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+part of bsi_dart;
 
 /// A handle to the location of a service in the bakecode service tree.
 @immutable

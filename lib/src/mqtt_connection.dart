@@ -1,6 +1,4 @@
-import 'package:bsi_dart/bsi_dart.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+part of bsi_dart;
 
 // TODO: add certificate propoerty, secure TLS/SSL socket connection.
 // TODO: do JsonSerializable
@@ -8,7 +6,6 @@ import 'package:meta/meta.dart';
 /// This class contains all parameters required for establishing a MQTT
 /// connection to the broker.
 @immutable
-@JsonSerializable(nullable: false)
 class MqttConnection {
   /// The brokers address.
   ///

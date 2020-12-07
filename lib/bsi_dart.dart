@@ -2,10 +2,20 @@
 
 library bsi_dart;
 
-export 'src/bsi.dart';
-export 'src/mqtt.dart';
-export 'src/mqtt_connection.dart';
-export 'src/reference.dart';
-export 'src/service.dart';
-export 'src/service_message.dart';
-export 'src/services.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:bsi_dart/vendor/logger.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
+
+part 'src/bsi.dart';
+part 'src/mqtt.dart';
+part 'src/mqtt_connection.dart';
+part 'src/reference.dart';
+part 'src/service.dart';
+part 'src/service_message.dart';
+part 'src/services.dart';

@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:bsi_dart/bsi_dart.dart';
-import 'package:bsi_dart/vendor/logger.dart';
-import 'package:meta/meta.dart';
+part of bsi_dart;
 
 /// This class represents a ServiceMessage packet interpretable by BakeCode
 /// Services by the BakeCode Services Interconnect Layer.

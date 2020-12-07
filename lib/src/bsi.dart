@@ -1,9 +1,4 @@
-import 'dart:async';
-
-import 'package:bsi_dart/bsi_dart.dart';
-import 'package:bsi_dart/vendor/logger.dart';
-import 'package:meta/meta.dart';
-import 'package:mqtt_client/mqtt_client.dart';
+part of bsi_dart;
 
 /// **BakeCode Services Interconnect Layer**
 ///

@@ -1,4 +1,4 @@
-import 'package:bsi_dart/bsi_dart.dart';
+part of bsi_dart;
 
 abstract class Services {
   /// Private generative constructor to prevent instantiation of this class.

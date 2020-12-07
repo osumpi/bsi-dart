@@ -1,7 +1,4 @@
-import 'dart:async';
-
-import 'package:bsi_dart/bsi_dart.dart';
-import 'package:meta/meta.dart';
+part of bsi_dart;
 
 abstract class BakeCodeService {
   /// Default constructor for [BakeCodeService].

@@ -1,11 +1,4 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:bsi_dart/bsi_dart.dart';
-import 'package:bsi_dart/vendor/logger.dart';
-import 'package:meta/meta.dart';
-import 'package:mqtt_client/mqtt_client.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
+part of bsi_dart;
 
 @sealed
 class Mqtt {
