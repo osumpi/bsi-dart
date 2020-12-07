@@ -31,7 +31,7 @@ Add this package to your project's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  bsi_dart:
+  bsi:
     path: bsi-dart/
 ```
 
@@ -48,7 +48,7 @@ pub get
 Now in your Dart project, you can use:
 
 ```dart
-import 'package:bsi_dart/bsi_dart.dart`;
+import 'package:bsi/bsi.dart`;
 ```
 
 ### 2. Usage
@@ -65,7 +65,7 @@ BSI package.
 As an example:
 
 ```dart
-import 'package:bsi_dart/bsi_dart.dart';
+import 'package:bsi/bsi.dart';
 
 class MyService extends Service {
   /// It is suggested that every application's top service is a singleton.
@@ -103,7 +103,7 @@ To initialize the MQTT instance inside the BSI layer with the ecosystem,
 the MQTT connection parameters must be specified to initialize.
 
 ```dart
-import 'package:bsi_dart/bsi_dart.dart';
+import 'package:bsi/bsi.dart';
 
 void main() async {
 
