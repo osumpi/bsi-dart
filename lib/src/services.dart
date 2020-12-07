@@ -1,4 +1,4 @@
-part of bsi_dart;
+part of bsi;
 
 abstract class Services {
   /// Private generative constructor to prevent instantiation of this class.

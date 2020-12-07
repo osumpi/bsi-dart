@@ -1,4 +1,4 @@
-part of bsi_dart;
+part of bsi;
 
 /// **BakeCode Services Interconnect Layer**
 ///
@@ -16,14 +16,14 @@ class BSI {
     Mqtt().connectionState.listen((connectionState) {
       if (connectionState == MqttConnectionState.connected) {
         subscription.resume();
-        log.i('''
+        print('''
         Outbox has been resumed.
         
         Reason: Connection state has changed to: $connectionState''');
       } else {
         subscription.pause();
 
-        log.w('''
+        print('''
         Outbox has been haulted.
         
         Reason: Connection state has changed to: $connectionState''');

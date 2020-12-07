@@ -1,4 +1,4 @@
-part of bsi_dart;
+part of bsi;
 
 /// A handle to the location of a service in the bakecode service tree.
 @immutable

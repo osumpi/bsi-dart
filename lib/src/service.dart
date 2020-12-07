@@ -1,4 +1,4 @@
-part of bsi_dart;
+part of bsi;
 
 abstract class BakeCodeService {
   /// Default constructor for [BakeCodeService].

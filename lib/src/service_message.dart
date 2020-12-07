@@ -1,4 +1,4 @@
-part of bsi_dart;
+part of bsi;
 
 /// This class represents a ServiceMessage packet interpretable by BakeCode
 /// Services by the BakeCode Services Interconnect Layer.
@@ -110,7 +110,7 @@ class ServiceMessage {
         message: p['message'].toString(),
       );
     } catch (e) {
-      log.e("""
+      print("""
         unable to jsonDecode received packet:
         $packet
 

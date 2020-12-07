@@ -1,4 +1,4 @@
-part of bsi_dart;
+part of bsi;
 
 @sealed
 class Mqtt {
@@ -24,21 +24,21 @@ class Mqtt {
   }) async {
     assert(using != null);
 
-    log.v("Initializing MQTT layer using: $using");
+    print("Initializing MQTT layer using: $using");
 
     client
       ..server = using.broker
       ..port = using.port
       ..keepAlivePeriod = 20
       ..autoReconnect = true
-      ..onAutoReconnect = (() => log.v('auto-reconnecting...'))
-      ..onAutoReconnected = (() => log.v('auto-reconnected'))
+      ..onAutoReconnect = (() => print('auto-reconnecting...'))
+      ..onAutoReconnected = (() => print('auto-reconnected'))
       ..onConnected = onConnected
-      ..onDisconnected = (() => log.w('disconnected'))
+      ..onDisconnected = (() => print('disconnected'))
       ..onBadCertificate = onBadCertificate
-      ..onSubscribeFail = ((topic) => log.e('subscription failed'))
-      ..onSubscribed = ((topic) => log.d('$topic subscribed'))
-      ..onUnsubscribed = ((topic) => log.d('$topic unsubscribed'))
+      ..onSubscribeFail = ((topic) => print('subscription failed'))
+      ..onSubscribed = ((topic) => print('$topic subscribed'))
+      ..onUnsubscribed = ((topic) => print('$topic unsubscribed'))
       // ..pongCallback = (() => log.v('pong at ${DateTime.now()}'))
       ..published
       ..updates
@@ -98,7 +98,7 @@ class Mqtt {
     try {
       client.subscribe(topic, qos);
     } catch (e) {
-      log.e(e);
+      print(e);
       pendingSubscriptions.add(topic);
     }
   }
@@ -108,7 +108,7 @@ class Mqtt {
     try {
       client.unsubscribe(topic);
     } catch (e) {
-      log.e(e);
+      print(e);
     }
   }
 
@@ -122,7 +122,7 @@ class Mqtt {
   }
 
   bool onBadCertificate(X509Certificate certificate) {
-    log.e('bad certificate');
+    print('bad certificate');
     return false;
   }
 

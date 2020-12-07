@@ -1,4 +1,4 @@
-part of bsi_dart;
+part of bsi;
 
 // TODO: add certificate propoerty, secure TLS/SSL socket connection.
 // TODO: do JsonSerializable

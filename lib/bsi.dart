@@ -1,12 +1,11 @@
 // TODO: add license here...
 
-library bsi_dart;
+library bsi;
 
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bsi_dart/vendor/logger.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:mqtt_client/mqtt_client.dart';
