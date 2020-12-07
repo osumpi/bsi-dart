@@ -59,13 +59,12 @@ class BSI {
 
   final hookedServices = <String, StreamSink<ServiceMessage>>{};
 
-  void hook(BakeCodeService service,
-          {@required StreamSink<ServiceMessage> sink}) =>
+  void hook(Service service, {@required StreamSink<ServiceMessage> sink}) =>
       hookedServices.putIfAbsent('${service.reference}', () {
         return sink;
       });
 
-  void unhook(BakeCodeService service) =>
+  void unhook(Service service) =>
       hookedServices.remove(service.reference)?.close();
 
   void onReceiveCallback(String topic, String packet) =>

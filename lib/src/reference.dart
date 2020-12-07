@@ -93,7 +93,7 @@ class ServiceReference extends Equatable {
   /// * Should not use uncommon characters or any special characters.
   /// * Should be relevant to the [Service] layer.
   ///
-  factory ServiceReference.fromString(String path) {
+  static ServiceReference _fromString(String path) {
     var levels = path.split('/');
 
     var root = ServiceReference.root(levels[0]);
@@ -158,6 +158,8 @@ class ServiceReference extends Equatable {
   /// `bakecode/eco/hw`
   @override
   String toString() => path;
+
+  String toJson() => path;
 
   /// List of all instantiated ServiceReferences.
   static final List<ServiceReference> all = List<ServiceReference>();

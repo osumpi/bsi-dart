@@ -1,22 +1,22 @@
 part of bsi;
 
-abstract class BakeCodeService {
-  /// Default constructor for [BakeCodeService].
+abstract class Service {
+  /// Default constructor for [Service].
   ///
   /// Registers onMessage stream controller's sink for listening to messages
   /// related to [context].
-  BakeCodeService() {
+  Service() {
     BSI.instance.hook(this, sink: _onReceiveSink);
   }
 
   /// Provides a handle for BakeCode services.
   ///
-  /// Path makes every [BakeCodeService]s to be identifiable.
+  /// Path makes every [Service]s to be identifiable.
   ServiceReference get reference;
 
   /// [ServiceReference] of the state of this service.
   ///
-  /// All [StateService] associated w/ a [BakeCodeService] resides here.
+  /// All [StateService] associated w/ a [Service] resides here.
   ServiceReference get state => reference.child('state');
 
   /// Exposes all incoming messages for this service.
@@ -24,23 +24,11 @@ abstract class BakeCodeService {
   /// Listen to messages that is addressed to this service.
   Stream<ServiceMessage> get onReceive => _onReceiveController.stream;
 
-  /// Sends a broadcast message.
+  /// Sends the message to the destinations specified in the message.
   ///
-  /// All nodes in the bakecode ecosystem may listen to the broadcast messages.
-  @mustCallSuper
-  void broadcast(String message) => BSI.instance.outbox
-      .add(ServiceMessage.asBroadcast(source: reference, message: message));
-
-  /// Sends the [message] [to] the service.
+  /// Sends by adding the message to the [BSI.instance]'s outbox.
   @nonVirtual
-  void notify(ServiceReference to, {@required String message}) =>
-      BSI.instance.outbox.add(ServiceMessage(
-          source: reference, destinations: [to], message: message));
-
-  /// Sends the [message] to every service specified in [to].
-  void notifyAll(Iterable<ServiceReference> to, {@required String message}) =>
-      BSI.instance.outbox.add(ServiceMessage(
-          source: reference, destinations: to, message: message));
+  void send(ServiceMessage message) => BSI.instance.outbox.add(message);
 
   /// Sink of [_onReceiveController].
   StreamSink<ServiceMessage> get _onReceiveSink => _onReceiveController.sink;

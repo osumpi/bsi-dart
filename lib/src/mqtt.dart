@@ -44,20 +44,15 @@ class Mqtt {
       ..updates
       ..logging(on: false)
       ..connectionMessage = MqttConnectMessage()
-          .withClientIdentifier('bakecode')
+          .withClientIdentifier('${using.service}')
           .keepAliveFor(client.keepAlivePeriod)
           .withWillQos(qos)
           .withWillRetain()
           .withClientIdentifier(client.clientIdentifier)
           .withWillMessage(
-            ServiceMessage(
-                    source: using.service,
-                    destinations: [
-                      using.service,
-                      Services.Broadcast,
-                    ],
-                    message: 'offline')
-                .toString(),
+            '${_BSIWillMessage(source: using.service, destinations: [
+              Services.Broadcast
+            ])}',
           )
           .withWillTopic('${using.service}')
           .authenticateAs(
