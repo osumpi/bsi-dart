@@ -50,10 +50,7 @@ class Mqtt {
           .withWillRetain()
           .withClientIdentifier(client.clientIdentifier)
           .withWillMessage(
-            '${_BSIWillMessage(source: using.service, destinations: [
-              Services.Broadcast
-            ])}',
-          )
+              '${_BSIWillMessage(using.service, [Services.Broadcast])}')
           .withWillTopic('${using.service}')
           .authenticateAs(
             using.authentication_username,
