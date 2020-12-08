@@ -34,9 +34,10 @@ abstract class ServiceMessage {
 
     var source = ServiceReference._fromString(packet['source'] as String);
 
-    var destinations = (packet['destinations'] as Iterable<String>)
-        .map(ServiceReference._fromString)
-        .toList();
+    var destinations = (packet['destinations'] as Iterable)
+        ?.cast<String>()
+        ?.map(ServiceReference._fromString)
+        ?.toList();
 
     var type = packet['type'] as String;
 
