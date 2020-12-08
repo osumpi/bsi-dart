@@ -44,10 +44,17 @@ abstract class ServiceMessage {
 
     switch (type) {
       case '_BSIWillMessage':
-        return _BSIWillMessage(source: source, destinations: destinations);
+        return _BSIWillMessage(source, destinations);
 
+      case 'Ping':
+        return Ping(source, destinations);
+
+      case 'Pong':
+        return Pong(source, destinations);
+
+      case 'CustomMessage':
       default:
-        return null;
+        return CustomMessage(source, destinations, message);
     }
   }
 }
@@ -60,7 +67,7 @@ class _BSIWillMessage extends ServiceMessage {
   @override
   String get message => 'offline';
 
-  _BSIWillMessage({@required this.source, @required this.destinations});
+  _BSIWillMessage(this.source, this.destinations);
 }
 
 class CustomMessage extends ServiceMessage {
@@ -69,11 +76,11 @@ class CustomMessage extends ServiceMessage {
 
   final message;
 
-  CustomMessage({
-    @required this.source,
-    @required this.destinations,
-    @required this.message,
-  });
+  CustomMessage(
+    this.source,
+    this.destinations,
+    this.message,
+  );
 }
 
 class Ping extends ServiceMessage {
@@ -82,10 +89,7 @@ class Ping extends ServiceMessage {
   @override
   String get message => "ping from $source";
 
-  Ping({
-    @required this.source,
-    @required this.destinations,
-  });
+  Ping(this.source, this.destinations);
 }
 
 class Pong extends ServiceMessage {
@@ -94,8 +98,5 @@ class Pong extends ServiceMessage {
   @override
   String get message => "ping reply from $source";
 
-  Pong({
-    @required this.source,
-    @required this.destinations,
-  });
+  Pong(this.source, this.destinations);
 }
