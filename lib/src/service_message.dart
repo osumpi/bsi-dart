@@ -1,6 +1,6 @@
 part of bsi;
 
-typedef ServiceMessageConstructor = ServiceMessage Function(String packet);
+// TODO: handle reply...
 
 /// The ServiceMessage interpretable by every BakeCode Service using BSI.
 ///
@@ -17,7 +17,8 @@ abstract class ServiceMessage {
   /// The message itself (nullable).
   String get message;
 
-  Map toJson() => {
+  @nonVirtual
+  Map<String, dynamic> toJson() => {
         'source': source,
         'destinations': destinations,
         'type': '$runtimeType',
@@ -25,6 +26,7 @@ abstract class ServiceMessage {
       };
 
   @override
+  @nonVirtual
   String toString() => jsonEncode(toJson());
 
   static ServiceMessage fromJson(String json) {
@@ -51,9 +53,9 @@ abstract class ServiceMessage {
 }
 
 class _BSIWillMessage extends ServiceMessage {
-  final ServiceReference source;
+  final source;
 
-  final Iterable<ServiceReference> destinations;
+  final destinations;
 
   @override
   String get message => 'offline';
@@ -61,16 +63,13 @@ class _BSIWillMessage extends ServiceMessage {
   _BSIWillMessage({@required this.source, @required this.destinations});
 }
 
-// TODO: handle reply...
+class CustomMessage extends ServiceMessage {
+  final source;
+  final destinations;
 
-class A extends ServiceMessage {
-  final ServiceReference source;
+  final message;
 
-  final Iterable<ServiceReference> destinations;
-
-  final String message;
-
-  A({
+  CustomMessage({
     @required this.source,
     @required this.destinations,
     @required this.message,
