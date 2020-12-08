@@ -71,10 +71,7 @@ class _BSIWillMessage extends ServiceMessage {
 }
 
 class CustomMessage extends ServiceMessage {
-  final source;
-  final destinations;
-
-  final message;
+  final source, destinations, message;
 
   CustomMessage(
     this.source,
