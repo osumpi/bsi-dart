@@ -22,7 +22,7 @@ it's LICENSE which can be found here__putLINK_HERE.
 Add this repo as a submodule inside the project's directory:
 
 ```sh
-git submodule add https://github.com/crysalisdevs/bsi-dart.git
+git submodule add https://github.com/crysalisdevs/bsi-dart.git bsi
 ```
 
 #### 1.2 Depend on it
@@ -32,7 +32,7 @@ Add this package to your project's pubspec.yaml file:
 ```yaml
 dependencies:
   bsi:
-    path: bsi-dart/
+    path: bsi/
 ```
 
 #### 1.3 Install it
