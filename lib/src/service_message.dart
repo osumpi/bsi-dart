@@ -87,3 +87,15 @@ class Ping extends ServiceMessage {
     @required this.destinations,
   });
 }
+
+class Pong extends ServiceMessage {
+  final source, destinations;
+
+  @override
+  String get message => "ping reply from $source";
+
+  Pong({
+    @required this.source,
+    @required this.destinations,
+  });
+}
