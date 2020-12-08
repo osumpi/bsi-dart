@@ -75,3 +75,15 @@ class CustomMessage extends ServiceMessage {
     @required this.message,
   });
 }
+
+class Ping extends ServiceMessage {
+  final source, destinations;
+
+  @override
+  String get message => "ping from $source";
+
+  Ping({
+    @required this.source,
+    @required this.destinations,
+  });
+}
