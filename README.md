@@ -15,27 +15,19 @@ that requires communicating with a BakeCode Ecosystem.
 ### 1. Installing
 
 By using BakeCode Services Interconnect Layer, you agree to comply with
-it's LICENSE which can be found here__putLINK_HERE.
+it's [LICENSE](https://github.com/crysalisdevs/bsi-dart/blob/main/LICENSE).
 
-#### 1.1 Add submodule
+#### 1.1 Depend on it
 
-Add this repo as a submodule inside the project's directory:
-
-```sh
-git submodule add https://github.com/crysalisdevs/bsi-dart.git bsi
-```
-
-#### 1.2 Depend on it
-
-Add this package to your project's pubspec.yaml file:
+Add the package to your project's pubspec.yaml file:
 
 ```yaml
 dependencies:
   bsi:
-    path: bsi/
+    git: git@github.com:crysalisdevs/bsi-dart.git
 ```
 
-#### 1.3 Install it
+#### 1.2 Install it
 
 You can install the package from the command line:
 
@@ -43,7 +35,7 @@ You can install the package from the command line:
 pub get
 ```
 
-#### 1.4 Import it
+#### 1.3 Import it
 
 Now in your Dart project, you can use:
 
