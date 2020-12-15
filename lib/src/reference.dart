@@ -145,6 +145,9 @@ class ServiceReference extends Equatable {
   /// ```
   ServiceReference child(String child) => ServiceReference(child, parent: this);
 
+  /// Gets the child reference with [name] to this reference. See [child].
+  ServiceReference operator [](String name) => child(name);
+
   @override
   List<Object> get props => [path];
 
