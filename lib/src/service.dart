@@ -14,6 +14,9 @@ abstract class Service {
   /// Path makes every [Service]s to be identifiable.
   ServiceReference get reference;
 
+  /// The reference to the [state]s of the service.
+  ServiceReference get state => reference['state'];
+
   /// Exposes all incoming messages for this service.
   ///
   /// Listen to messages that is addressed to this service.
@@ -31,33 +34,3 @@ abstract class Service {
   /// Stream controller for on message events.
   final _onReceiveController = StreamController<ServiceMessage>();
 }
-
-abstract class StatefulService extends Service {
-  /// [ServiceReference] of the state of this service.
-  ///
-  /// All [StateService] associated w/ a [Service] resides here.
-  ServiceReference get state => reference.child('state');
-
-  State createState();
-}
-
-abstract class State<T extends StatefulService> {
-  @protected
-  final Map<String, Object> state = {};
-
-  @mustCallSuper
-  @protected
-  void initState() {}
-
-  @protected
-  @nonVirtual
-  FutureOr setState(FutureOr Function() fn) async => await fn();
-}
-
-class BakeCode extends StatefulService {
-  get reference => ServiceReference.root('bae');
-
-  createState() => _BakeCodeState();
-}
-
-class _BakeCodeState extends State<BakeCode> {}
