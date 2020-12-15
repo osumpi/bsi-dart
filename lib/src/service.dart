@@ -15,7 +15,7 @@ abstract class Service {
   ServiceReference get reference;
 
   /// The reference to the [state]s of the service.
-  ServiceReference get state => reference['state'];
+  ServiceReference get _stateReference => reference['state'];
 
   /// Exposes all incoming messages for this service.
   ///
