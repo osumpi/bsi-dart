@@ -120,13 +120,26 @@ class Mqtt {
 
   /// Publish a message.
   ///
-  /// Publishes the [message] to the specified [topic].
-  /// [topic] should follow MQTT Topic Guidelines.
+  /// Publishes the [message] to the specified [topic]. [topic] should follow
+  /// MQTT Topic Guidelines.
   ///
-  /// The QOS used by default will be [MqttQos.atLeastOnce].
+  /// The default QOS that shall be used is [MqttQos.atLeastOnce].
   /// However this can be overriden by specifying the [qos].
-  int publish(String message, {@required String to}) => client.publishMessage(
-      to, qos, (MqttClientPayloadBuilder()..addString(message)).payload);
+  ///
+  /// Set [shouldRetain] option to `true` (default: `false`), to retain the
+  /// [message] when a client subscribes to the [topic].
+  int publish(
+    String message, {
+    @required String topic,
+    bool shouldRetain = false,
+    MqttQos qos = MqttQos.atLeastOnce,
+  }) =>
+      client.publishMessage(
+        topic,
+        qos,
+        (MqttClientPayloadBuilder()..addString(message)).payload,
+        retain: shouldRetain,
+      );
 
   /// Updates the `_connectionStateStreamController` w/ latest state.
   void updateConnectionState() =>
