@@ -1,5 +1,6 @@
 part of bsi;
 
+@immutable
 abstract class Service {
   /// Default constructor for [Service].
   ///
@@ -15,7 +16,7 @@ abstract class Service {
   ServiceReference get reference;
 
   /// The reference to the [state]s of the service.
-  ServiceReference get _stateReference => reference['state'];
+  ServiceReference get states => reference['state'];
 
   /// Exposes all incoming messages for this service.
   ///
@@ -33,4 +34,25 @@ abstract class Service {
 
   /// Stream controller for on message events.
   final _onReceiveController = StreamController<ServiceMessage>();
+
+  /// Update [State]s of the service.
+  @protected
+  @nonVirtual
+  Iterable<State> set(Map<State, dynamic> diff) {
+    // Filters out unchanged states.
+    diff.removeWhere((state, newValue) => state.value == newValue);
+
+    // Updates every state that has change.
+    diff.forEach(_updateState);
+
+    return diff.keys;
+  }
+
+  /// Update the [state] with a [newValue].
+  @nonVirtual
+  @protected
+  void _updateState(State state, dynamic newValue) {
+    state._value = newValue;
+    send(_StateUpdateMessage(states[state.identifier], '$newValue'));
+  }
 }
