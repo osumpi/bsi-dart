@@ -54,8 +54,12 @@ class BSI {
   Sink<ServiceMessage> get outbox => _outgoingMessageController.sink;
 
   /// Sends [message] to the corresponding destinations specified in packet.
-  void _send(ServiceMessage message) => message.destinations.forEach(
-      (destination) => Mqtt.instance.publish('$message', to: '$destination'));
+  void _send(ServiceMessage message) =>
+      message.destinations.forEach((destination) => Mqtt.instance.publish(
+            '$message',
+            topic: '$destination',
+            shouldRetain: message.sendOptions._retain,
+          ));
 
   final hookedServices = <String, StreamSink<ServiceMessage>>{};
 
