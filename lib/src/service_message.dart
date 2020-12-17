@@ -2,6 +2,22 @@ part of bsi;
 
 // TODO: handle reply...
 
+/// The send options for a message to be sent.
+///
+/// Allows special options to be applied to a message before being sent by the
+/// BSI.
+///
+/// *Note:* SendOptions on a receiving message does not play any role, and
+/// cannot be from a message.
+///
+/// Options include [_retain]. See [_retain].
+class SendOptions {
+  /// Retains the message on the topic, so that when a new client subscribes to
+  /// the topic, the message is retained. Note that previous retained message
+  /// on that topic will no longer be retained if any.
+  bool _retain = false;
+}
+
 /// The ServiceMessage interpretable by every BakeCode Service using BSI.
 ///
 /// Packets are represented in Json format. This class helps to envelope a
@@ -16,6 +32,17 @@ abstract class ServiceMessage {
 
   /// The message itself (nullable).
   String get message;
+
+  /// The send options for a message to be sent.
+  ///
+  /// Allows special options to be applied to a message before being sent by the
+  /// BSI.
+  ///
+  /// *Note:* SendOptions on a receiving message does not play any role, and
+  /// cannot be from a message.
+  ///
+  /// See [SendOptions].
+  final sendOptions = SendOptions();
 
   @nonVirtual
   Map<String, dynamic> toJson() => {
