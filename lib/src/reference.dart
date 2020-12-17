@@ -41,9 +41,7 @@ class ServiceReference extends Equatable {
   ServiceReference(this.name, {@required this.parent})
       : assert(name.contains('/') == false),
         assert(name.contains(' ') == false),
-        assert(name != null) {
-    all.add(this);
-  }
+        assert(name != null);
 
   /// Creates a root ServiceReference.
   ///
@@ -163,7 +161,4 @@ class ServiceReference extends Equatable {
   String toString() => path;
 
   String toJson() => path;
-
-  /// List of all instantiated ServiceReferences.
-  static final List<ServiceReference> all = List<ServiceReference>();
 }
