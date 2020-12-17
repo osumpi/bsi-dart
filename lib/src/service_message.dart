@@ -53,7 +53,6 @@ abstract class ServiceMessage {
       };
 
   @override
-  @nonVirtual
   String toString() => jsonEncode(toJson());
 
   static ServiceMessage fromJson(String json) {
@@ -124,4 +123,19 @@ class Pong extends ServiceMessage {
   String get message => "ping reply from $source";
 
   Pong(this.source, this.destinations);
+}
+
+class _StateUpdateMessage extends ServiceMessage {
+  @override
+  ServiceReference get source => null;
+
+  SendOptions get sendOptions => SendOptions().._retain = true;
+
+  final destinations, message;
+
+  _StateUpdateMessage(ServiceReference path, this.message)
+      : destinations = [path];
+
+  @override
+  String toString() => message;
 }
