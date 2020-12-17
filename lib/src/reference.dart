@@ -161,4 +161,19 @@ class ServiceReference extends Equatable {
   String toString() => path;
 
   String toJson() => path;
+
+  /// Rebases the instance service reference with the provided [base], by
+  /// simply appending `this` to `base`.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// var base = Services.Hardwares['scara']['state'];
+  /// var perf = ServiceReference.root('perf');
+  ///
+  /// perf = perf.rebase(base);
+  ///
+  /// assert('$perf' == '${Services.Hardwares}/scara/state/perf', 'Impossible');
+  /// ```
+  ServiceReference rebase(ServiceReference base) =>
+      _fromString(['$base', '$this'].join('/'));
 }
