@@ -14,4 +14,7 @@ class State {
   /// The value of the state.
   @nonVirtual
   String get value => '$_value';
+
+  @override
+  String toString() => value;
 }
