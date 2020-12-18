@@ -6,7 +6,7 @@ part of bsi;
 /// This class contains all parameters required for establishing a MQTT
 /// connection to the broker.
 @immutable
-class MqttConnection {
+class BSIConfiguration {
   /// The brokers address.
   ///
   /// *Example:*
@@ -27,19 +27,19 @@ class MqttConnection {
   ///
   /// *Example:*
   /// ```dart
-  /// var authentication_username = "admin";
+  /// var auth_username = "admin";
   /// ```
-  final String authentication_username;
+  final String auth_username;
 
   /// Broker authentication password.
   ///
   /// *Example:*
   /// ```dart
-  /// var authentication_password = "bakecode is osum!";
+  /// var auth_password = "bakecode is osum!";
   /// ```
-  final String authentication_password;
+  final String auth_password;
 
-  /// The [service] that attempts to make the connection.
+  /// The [representingService] that attempts to make the connection.
   ///
   /// Used for setting up willMessage and willTopic.
   ///
@@ -51,32 +51,32 @@ class MqttConnection {
   ///   message: 'offline'
   /// );
   /// ```
-  final ServiceReference service;
+  final ServiceReference representingService;
 
   /// Create instance of MqttConnection from specified data.
   ///
   /// * Address of [broker]. eg: `"192.168.0.7"`.
   /// * MQTT broker's [port] number. default: `1883`.
   /// * Authentication credentials can be specified using
-  /// [authentication_username] & [authentication_password].
-  const MqttConnection.from({
-    @required this.service,
+  /// [auth_username] & [auth_password].
+  const BSIConfiguration.from({
+    @required this.representingService,
     @required this.broker,
     this.port = 1883,
-    this.authentication_username = '',
-    this.authentication_password = '',
+    this.auth_username = '',
+    this.auth_password = '',
   });
 
   /// Returns true if authentication credentials are specified.
-  bool get hasAuthentication =>
-      authentication_username != '' || authentication_password != '';
+  bool get hasAuthentication => auth_username != '' || auth_password != '';
+
+  Map<String, String> toJson() => {
+        "broker": broker,
+        "port": '$port',
+        "auth_username": '$auth_username',
+        "auth_password": '$auth_password'
+      };
 
   @override
-  String toString() => """
-  {
-    "broker": "$broker",
-    "port": $port,
-    "authentication_username": "$authentication_username",
-    "authentication_password": "$authentication_password",
-  }""";
+  String toString() => jsonEncode(toJson());
 }
