@@ -43,7 +43,7 @@ abstract class Service {
     ..removeWhere((state, newValue) => '$state' == '$newValue')
     // Updates every state that has change.
     ..forEach((state, newValue) {
-      state._value = '$newValue';
+      state.value = '$newValue';
       send(_StateUpdateMessage(states[state.identifier], '$newValue'));
     });
 }
