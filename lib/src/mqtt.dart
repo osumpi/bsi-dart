@@ -17,10 +17,10 @@ class Mqtt {
   /// QOS to be used for all messages.
   static const MqttQos qos = MqttQos.exactlyOnce;
 
-  /// Initialize the MQTT layer by specifying [using] with the [MqttConnection]
+  /// Initialize the MQTT layer by specifying [using] with the [BSIConfiguration]
   /// specifications.
   Future<MqttClientConnectionStatus> initialize({
-    @required MqttConnection using,
+    @required BSIConfiguration using,
   }) async {
     assert(using != null);
 
@@ -44,17 +44,18 @@ class Mqtt {
       ..updates
       ..logging(on: false)
       ..connectionMessage = MqttConnectMessage()
-          .withClientIdentifier('${using.service}')
+          .withClientIdentifier('${using.representingService}')
           .keepAliveFor(client.keepAlivePeriod)
           .withWillQos(qos)
           .withWillRetain()
           .withClientIdentifier(client.clientIdentifier)
-          .withWillMessage(
-              '${_BSIWillMessage(using.service, [Services.Broadcast])}')
-          .withWillTopic('${using.service}')
+          .withWillMessage('${_BSIWillMessage(using.representingService, [
+            Services.Broadcast
+          ])}')
+          .withWillTopic('${using.representingService}')
           .authenticateAs(
-            using.authentication_username,
-            using.authentication_password,
+            using.auth_username,
+            using.auth_password,
           );
 
     return await connect();
