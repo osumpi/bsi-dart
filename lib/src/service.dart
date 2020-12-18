@@ -38,12 +38,12 @@ abstract class Service {
   /// Update [State]s of the service.
   @protected
   @nonVirtual
-  void set(Map<State, String> diff) => diff
+  void set(Map<State, dynamic> diff) => diff
     // Filters out unchanged states.
-    ..removeWhere((state, newValue) => '$state' == newValue)
+    ..removeWhere((state, newValue) => '$state' == '$newValue')
     // Updates every state that has change.
     ..forEach((state, newValue) {
-      state._value = newValue;
+      state._value = '$newValue';
       send(_StateUpdateMessage(states[state.identifier], '$newValue'));
     });
 }
