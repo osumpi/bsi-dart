@@ -1,6 +1,5 @@
 part of bsi;
 
-@immutable
 abstract class Service {
   /// Default constructor for [Service].
   ///
