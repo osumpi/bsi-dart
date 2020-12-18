@@ -13,7 +13,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 
 part 'src/bsi.dart';
 part 'src/mqtt.dart';
-part 'src/mqtt_connection.dart';
+part 'src/bsi_configuration.dart';
 part 'src/reference.dart';
 part 'src/service.dart';
 part 'src/service_message.dart';
