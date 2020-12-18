@@ -65,7 +65,7 @@ class BSIConfiguration {
     this.port = 1883,
     this.auth_username = '',
     this.auth_password = '',
-  });
+  }) : assert(broker != null && port != null, "Broker or port cannot be null");
 
   /// Returns true if authentication credentials are specified.
   bool get hasAuthentication => auth_username != '' || auth_password != '';
