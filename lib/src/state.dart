@@ -1,7 +1,7 @@
 part of bsi;
 
 /// State of a Service.
-class State<T> {
+class State {
   /// [identifier] string for the state.
   final String identifier;
 
@@ -9,13 +9,9 @@ class State<T> {
   State(this.identifier);
 
   /// The value of the state.
-  T _value;
+  String _value;
 
   /// The value of the state.
   @nonVirtual
-  T get value => _value;
-
-  /// The type of the state's value.
-  @nonVirtual
-  Type get type => T;
+  String get value => '$_value';
 }
