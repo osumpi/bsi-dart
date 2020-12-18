@@ -38,21 +38,12 @@ abstract class Service {
   /// Update [State]s of the service.
   @protected
   @nonVirtual
-  Iterable<State> set(Map<State, dynamic> diff) {
+  void set(Map<State, String> diff) => diff
     // Filters out unchanged states.
-    diff.removeWhere((state, newValue) => state.value == newValue);
-
+    ..removeWhere((state, newValue) => '$state' == newValue)
     // Updates every state that has change.
-    diff.forEach(_updateState);
-
-    return diff.keys;
-  }
-
-  /// Update the [state] with a [newValue].
-  @nonVirtual
-  @protected
-  void _updateState(State state, dynamic newValue) {
-    state._value = newValue;
-    send(_StateUpdateMessage(states[state.identifier], '$newValue'));
-  }
+    ..forEach((state, newValue) {
+      state._value = newValue;
+      send(_StateUpdateMessage(states[state.identifier], '$newValue'));
+    });
 }
