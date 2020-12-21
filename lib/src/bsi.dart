@@ -70,9 +70,7 @@ Reason: Connection state has changed to: $connectionState""");
   final hookedServices = <String, StreamSink<ServiceMessage>>{};
 
   void hook(Service service, {@required StreamSink<ServiceMessage> sink}) =>
-      hookedServices.putIfAbsent('${service.reference}', () {
-        return sink;
-      });
+      hookedServices.putIfAbsent('${service.reference}', () => sink);
 
   void unhook(Service service) =>
       hookedServices.remove(service.reference)?.close();
