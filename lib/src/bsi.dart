@@ -61,12 +61,11 @@ Reason: Connection state has changed to: $connectionState""");
   Sink<ServiceMessage> get outbox => _outgoingMessageController.sink;
 
   /// Sends [message] to the corresponding destinations specified in packet.
-  void _send(ServiceMessage message) =>
-      message.destinations.forEach((destination) => Mqtt.instance.publish(
-            '$message',
-            topic: '$destination',
-            shouldRetain: message.sendOptions._retain,
-          ));
+  void _send(ServiceMessage message) => Mqtt.instance.publish(
+        '$message',
+        topic: '${message._sendOptions.destination}',
+        shouldRetain: message._sendOptions.retain,
+      );
 
   final hookedServices = <String, StreamSink<ServiceMessage>>{};
 
@@ -78,6 +77,6 @@ Reason: Connection state has changed to: $connectionState""");
   void unhook(Service service) =>
       hookedServices.remove(service.reference)?.close();
 
-  void onReceiveCallback(String topic, String packet) =>
-      hookedServices[topic]?.add(ServiceMessage.fromJson(packet));
+  void onReceiveCallback(String topic, String message) =>
+      hookedServices[topic]?.add(ServiceMessage._incoming(message));
 }
