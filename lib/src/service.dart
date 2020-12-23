@@ -20,19 +20,29 @@ abstract class Service {
   /// Exposes all incoming messages for this service.
   ///
   /// Listen to messages that is addressed to this service.
-  Stream<ServiceMessage> get onReceive => _onReceiveController.stream;
+  Stream<String> get onReceive => _onReceiveController.stream;
 
   /// Sends the message to the destinations specified in the message.
   ///
   /// Sends by adding the message to the [BSI.instance]'s outbox.
   @nonVirtual
-  void send(ServiceMessage message) => BSI.instance.outbox.add(message);
+  void send(
+    String message, {
+    @required Iterable<ServiceReference> destinations,
+    SendOptions options,
+  }) =>
+      BSI.instance.outbox.add(_OutgoingMessage(
+        message,
+        source: reference,
+        destinations: destinations,
+        options: options,
+      ));
 
   /// Sink of [_onReceiveController].
-  StreamSink<ServiceMessage> get _onReceiveSink => _onReceiveController.sink;
+  StreamSink<String> get _onReceiveSink => _onReceiveController.sink;
 
   /// Stream controller for on message events.
-  final _onReceiveController = StreamController<ServiceMessage>();
+  final _onReceiveController = StreamController<String>();
 
   /// Update [State]s of the service.
   @protected
@@ -43,6 +53,8 @@ abstract class Service {
     // Updates every state that has change.
     ..forEach((state, newValue) {
       state.value = '$newValue';
-      send(_StateUpdateMessage(states[state.identifier], '$newValue'));
+      send('$newValue', destinations: [
+        states[state.identifier]
+      ]); // TODO: conditionally modify send Options.
     });
 }

@@ -41,7 +41,7 @@ class _OutgoingMessage {
 
   final Iterable<ServiceReference> destinations;
 
-  final ServiceMessage message;
+  final String message;
 
   final SendOptions options;
 

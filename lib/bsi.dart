@@ -16,7 +16,6 @@ part 'src/mqtt.dart';
 part 'src/bsi_configuration.dart';
 part 'src/reference.dart';
 part 'src/service.dart';
-part 'src/service_message.dart';
 part 'src/services.dart';
 part 'src/state.dart';
 part 'src/outgoing_message.dart';

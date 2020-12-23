@@ -48,7 +48,7 @@ Reason: Connection state has changed to: $connectionState""");
   ///
   /// Services can add [ServiceMessages] to the [outbox] and the listener of
   /// this stream shall send the messages when connection is available.
-  final _outgoingMessageController = StreamController<ServiceMessage>();
+  final _outgoingMessageController = StreamController<_OutgoingMessage>();
 
   /// The outbox for messages to be sent.
   ///
@@ -58,23 +58,24 @@ Reason: Connection state has changed to: $connectionState""");
   /// On reconnect, previous messages may be discarded depending on the setting
   /// specified in the configuration file.
   /// Configuration: `BSI::drain outbox on reconnect`.
-  Sink<ServiceMessage> get outbox => _outgoingMessageController.sink;
+  Sink<_OutgoingMessage> get outbox => _outgoingMessageController.sink;
 
   /// Sends [message] to the corresponding destinations specified in packet.
-  void _send(ServiceMessage message) => Mqtt.instance.publish(
-        '$message',
-        topic: '${message._sendOptions.destination}',
-        shouldRetain: message._sendOptions.retain,
-      );
+  void _send(_OutgoingMessage message) =>
+      message.destinations.forEach((destination) => Mqtt.instance.publish(
+            '$message',
+            topic: '$destination',
+            shouldRetain: message.options.retain,
+          ));
 
-  final hookedServices = <String, StreamSink<ServiceMessage>>{};
+  final hookedServices = <String, StreamSink<String>>{};
 
-  void hook(Service service, {@required StreamSink<ServiceMessage> sink}) =>
+  void hook(Service service, {@required StreamSink<String> sink}) =>
       hookedServices.putIfAbsent('${service.reference}', () => sink);
 
   void unhook(Service service) =>
       hookedServices.remove(service.reference)?.close();
 
   void onReceiveCallback(String topic, String message) =>
-      hookedServices[topic]?.add(ServiceMessage._incoming(message));
+      hookedServices[topic]?.add(message);
 }
