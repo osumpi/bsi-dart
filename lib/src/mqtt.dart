@@ -49,10 +49,13 @@ class Mqtt {
           .withWillQos(qos)
           .withWillRetain()
           .withClientIdentifier(client.clientIdentifier)
-          .withWillMessage('${_BSIWillMessage(using.representingService, [
-            Services.Broadcast
-          ])}')
-          .withWillTopic('${using.representingService}')
+          // TODO: enable will conditionally.
+          // .withWillMessage(
+          //   '${ServiceMessage(
+          //     '${using.representingService}',
+          //   )..destination = Services.Broadcast}',
+          // )
+          // .withWillTopic('${using.representingService}')
           .authenticateAs(
             using.auth_username,
             using.auth_password,
