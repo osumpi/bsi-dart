@@ -83,7 +83,7 @@ class Mqtt {
       );
 
   /// Enqueue failed subscription topics which shall be dequeued onConnect;
-  final pendingSubscriptions = <String>[];
+  final _mySubscriptions = <String>[];
 
   /// Subscribe to a topic.
   void subscribe(String topic) {
@@ -91,7 +91,7 @@ class Mqtt {
       client.subscribe(topic, qos);
     } catch (e) {
       print(e);
-      pendingSubscriptions.add(topic);
+      _mySubscriptions.add(topic);
     }
   }
 
@@ -106,7 +106,7 @@ class Mqtt {
 
   /// Subscribes failed subscriptions and listen for updates.
   void onConnected() {
-    pendingSubscriptions.forEach(subscribe);
+    _mySubscriptions.forEach(subscribe);
 
     client.updates.listen((e) => onReceive(e[0]));
 

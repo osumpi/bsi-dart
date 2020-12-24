@@ -71,7 +71,10 @@ Reason: Connection state has changed to: $connectionState""");
   final hookedServices = <String, StreamSink<String>>{};
 
   void hook(ServiceReference reference, {@required StreamSink<String> sink}) =>
-      hookedServices.putIfAbsent('$reference', () => sink);
+      hookedServices.putIfAbsent('$reference', () {
+        Mqtt.instance.subscribe('$reference');
+        return sink;
+      });
 
   void unhook(Service service) =>
       hookedServices.remove(service.reference)?.close();
