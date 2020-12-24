@@ -53,8 +53,13 @@ abstract class Service {
     // Updates every state that has change.
     ..forEach((state, newValue) {
       state.value = '$newValue';
-      send('$newValue', destinations: [
-        states[state.identifier]
-      ]); // TODO: conditionally modify send Options.
+      send(
+        '$newValue',
+        destinations: [states[state.identifier]],
+      ); // TODO: conditionally modify send Options.
     });
+
+  @protected
+  @mustCallSuper
+  void initState() {}
 }
