@@ -89,7 +89,7 @@ class Mqtt {
   void subscribe(String topic) {
     try {
       client.subscribe(topic, qos);
-    } finally {
+    } catch (e) {} finally {
       if (!_mySubscriptions.contains(topic)) {
         _mySubscriptions.add(topic);
       }
@@ -100,7 +100,7 @@ class Mqtt {
   void unsubscribe(String topic) {
     try {
       client.unsubscribe(topic);
-    } finally {
+    } catch (e) {} finally {
       _mySubscriptions.remove(topic);
     }
   }
