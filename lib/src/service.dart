@@ -22,6 +22,9 @@ abstract class Service {
   /// Listen to messages that is addressed to this service.
   Stream<String> get onReceive => _onReceiveController.stream;
 
+  static const _defaultSendOptions =
+      const SendOptions(important: true, retain: false);
+
   /// Sends the message to the destinations specified in the message.
   ///
   /// Sends by adding the message to the [BSI.instance]'s outbox.
@@ -29,7 +32,7 @@ abstract class Service {
   void send(
     String message, {
     @required Iterable<ServiceReference> destinations,
-    SendOptions options,
+    SendOptions options = _defaultSendOptions,
   }) =>
       BSI.instance.outbox.add(_OutgoingMessage(
         message,
