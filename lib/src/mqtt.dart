@@ -48,7 +48,6 @@ class Mqtt {
           .keepAliveFor(client.keepAlivePeriod)
           .withWillQos(qos)
           .withWillRetain()
-          .withClientIdentifier(client.clientIdentifier)
           // TODO: enable will conditionally.
           // .withWillMessage(
           //   '${ServiceMessage(
@@ -56,10 +55,7 @@ class Mqtt {
           //   )..destination = Services.Broadcast}',
           // )
           // .withWillTopic('${using.representingService}')
-          .authenticateAs(
-            using.auth_username,
-            using.auth_password,
-          );
+          .authenticateAs(using.auth_username, using.auth_password);
 
     return await connect();
   }
