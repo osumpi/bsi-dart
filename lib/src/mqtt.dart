@@ -107,6 +107,7 @@ class Mqtt {
 
   /// Subscribes failed subscriptions and listen for updates.
   void onConnected() {
+    _mySubscriptions.forEach(unsubscribe);
     _mySubscriptions.forEach(subscribe);
 
     client.updates.listen((e) => onReceive(e[0]));
