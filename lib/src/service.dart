@@ -6,7 +6,7 @@ abstract class Service {
   /// Registers onMessage stream controller's sink for listening to messages
   /// related to [context].
   Service() {
-    BSI.instance.hook(this, sink: _onReceiveSink);
+    BSI.instance.hook(reference, sink: _onReceiveSink);
   }
 
   /// Provides a handle for BakeCode services.
