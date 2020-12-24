@@ -51,4 +51,7 @@ class _OutgoingMessage {
     @required this.destinations,
     @required this.options,
   });
+
+  @override
+  String toString() => message;
 }
