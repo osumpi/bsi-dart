@@ -105,12 +105,17 @@ class Mqtt {
     }
   }
 
+  bool firstTime = true;
+
   /// Subscribes failed subscriptions and listen for updates.
   void onConnected() {
-    _mySubscriptions.forEach(unsubscribe);
-    _mySubscriptions.forEach(subscribe);
+    if (firstTime) {
+      _mySubscriptions.forEach(subscribe);
 
-    client.updates.listen((e) => onReceive(e[0]));
+      client.updates.listen((e) => onReceive(e[0]));
+
+      firstTime = false;
+    }
 
     updateConnectionState();
   }
