@@ -36,9 +36,9 @@ class Mqtt {
       ..onConnected = onConnected
       ..onDisconnected = (() => log('Disconnected'))
       ..onBadCertificate = onBadCertificate
-      ..onSubscribeFail = ((topic) => log('Subscribing $topic failed.'))
-      ..onSubscribed = ((topic) => log('Subscribing $topic success.'))
-      ..onUnsubscribed = ((topic) => log('$topic unsubscribed.'))
+      ..onSubscribeFail = ((topic) => log('Subscribing \"$topic\" failed.'))
+      ..onSubscribed = ((topic) => log('Subscribing \"$topic\" success.'))
+      ..onUnsubscribed = ((topic) => log('\"$topic\" unsubscribed.'))
       // ..pongCallback = (() => log.v('pong at ${DateTime.now()}'))
       ..published
       ..updates
@@ -109,7 +109,7 @@ class Mqtt {
 
   /// Subscribes failed subscriptions and listen for updates.
   void onConnected() {
-    log('Connected to ${client.server}:${client.port}');
+    log('Connected to MQTT Broker at: ${client.server}:${client.port}');
 
     if (firstTime) {
       _mySubscriptions.forEach(subscribe);
