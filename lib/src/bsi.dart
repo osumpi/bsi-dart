@@ -30,10 +30,8 @@ class BSI {
   /// [MqttClientConnectionStatus].
   Future<MqttClientConnectionStatus> initialize(
     BSIConfiguration config,
-  ) async {
-    log("Initializing BSI with: $config");
-    return await Mqtt.instance.initialize(using: config);
-  }
+  ) async =>
+      await Mqtt.instance.initialize(using: config);
 
   /// The singleton instance of BakeCode Services Interconnect Layer.
   static final instance = BSI._();

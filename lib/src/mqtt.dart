@@ -22,21 +22,23 @@ class Mqtt {
   Future<MqttClientConnectionStatus> initialize({
     @required BSIConfiguration using,
   }) async {
-    assert(using != null);
+    if (using.auth_username == null || using.auth_password == null) {
+      log('WARNING: No authentication.');
+    }
 
     client
       ..server = using.broker
       ..port = using.port
       ..keepAlivePeriod = 20
       ..autoReconnect = true
-      ..onAutoReconnect = (() => log('auto-reconnecting...'))
-      ..onAutoReconnected = (() => log('auto-reconnected'))
+      ..onAutoReconnect = (() => log('Auto-reconnecting...'))
+      ..onAutoReconnected = (() => log('Auto-reconnected'))
       ..onConnected = onConnected
-      ..onDisconnected = (() => log('disconnected'))
+      ..onDisconnected = (() => log('Disconnected'))
       ..onBadCertificate = onBadCertificate
-      ..onSubscribeFail = ((topic) => log('subscription failed'))
-      ..onSubscribed = ((topic) => log('$topic subscribed'))
-      ..onUnsubscribed = ((topic) => log('$topic unsubscribed'))
+      ..onSubscribeFail = ((topic) => log('Subscribing $topic failed.'))
+      ..onSubscribed = ((topic) => log('Subscribing $topic success.'))
+      ..onUnsubscribed = ((topic) => log('$topic unsubscribed.'))
       // ..pongCallback = (() => log.v('pong at ${DateTime.now()}'))
       ..published
       ..updates
@@ -107,6 +109,8 @@ class Mqtt {
 
   /// Subscribes failed subscriptions and listen for updates.
   void onConnected() {
+    log('Connected to ${client.server}:${client.port}');
+
     if (firstTime) {
       _mySubscriptions.forEach(subscribe);
 
