@@ -10,6 +10,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'src/misc.dart';
 
 part 'src/bsi.dart';
 part 'src/mqtt.dart';

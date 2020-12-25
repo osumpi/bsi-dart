@@ -16,15 +16,10 @@ class BSI {
     Mqtt().connectionState.listen((connectionState) {
       if (connectionState == MqttConnectionState.connected) {
         subscription.resume();
-        print("""
-Outbox has been resumed.
-Reason: Connection state has changed to: $connectionState""");
+        log("Outbox resumed as connection state changed to $connectionState");
       } else {
         subscription.pause();
-
-        print("""
-Outbox has been haulted.
-Reason: Connection state has changed to: $connectionState""");
+        log("Outbox paused as connection state changed to: $connectionState");
       }
     });
   }
@@ -35,8 +30,10 @@ Reason: Connection state has changed to: $connectionState""");
   /// [MqttClientConnectionStatus].
   Future<MqttClientConnectionStatus> initialize(
     BSIConfiguration config,
-  ) async =>
-      await Mqtt.instance.initialize(using: config);
+  ) async {
+    log("Initializing BSI with: $config");
+    return await Mqtt.instance.initialize(using: config);
+  }
 
   /// The singleton instance of BakeCode Services Interconnect Layer.
   static final instance = BSI._();

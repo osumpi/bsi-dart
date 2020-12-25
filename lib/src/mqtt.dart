@@ -24,21 +24,19 @@ class Mqtt {
   }) async {
     assert(using != null);
 
-    print("Initializing MQTT layer using: $using");
-
     client
       ..server = using.broker
       ..port = using.port
       ..keepAlivePeriod = 20
       ..autoReconnect = true
-      ..onAutoReconnect = (() => print('auto-reconnecting...'))
-      ..onAutoReconnected = (() => print('auto-reconnected'))
+      ..onAutoReconnect = (() => log('auto-reconnecting...'))
+      ..onAutoReconnected = (() => log('auto-reconnected'))
       ..onConnected = onConnected
-      ..onDisconnected = (() => print('disconnected'))
+      ..onDisconnected = (() => log('disconnected'))
       ..onBadCertificate = onBadCertificate
-      ..onSubscribeFail = ((topic) => print('subscription failed'))
-      ..onSubscribed = ((topic) => print('$topic subscribed'))
-      ..onUnsubscribed = ((topic) => print('$topic unsubscribed'))
+      ..onSubscribeFail = ((topic) => log('subscription failed'))
+      ..onSubscribed = ((topic) => log('$topic subscribed'))
+      ..onUnsubscribed = ((topic) => log('$topic unsubscribed'))
       // ..pongCallback = (() => log.v('pong at ${DateTime.now()}'))
       ..published
       ..updates
@@ -64,11 +62,11 @@ class Mqtt {
   Future<MqttClientConnectionStatus> connect() async {
     try {
       return await client.connect();
-    } on NoConnectionException catch (e) {
-      print(e);
+    } on NoConnectionException catch (e, s) {
+      log('$e', stackTrace: s);
       client.disconnect();
-    } on SocketException catch (e) {
-      print(e);
+    } on SocketException catch (e, s) {
+      log('$e', stackTrace: s);
       client.disconnect();
     }
     return client.connectionStatus;
@@ -121,7 +119,7 @@ class Mqtt {
   }
 
   bool onBadCertificate(X509Certificate certificate) {
-    print('bad certificate');
+    log('bad certificate');
     return false;
   }
 
