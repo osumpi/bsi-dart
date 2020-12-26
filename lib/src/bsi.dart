@@ -76,7 +76,5 @@ class BSI {
 
   void onReceiveCallback(String topic, String message) {
     hookedServices[topic]?.add(message);
-
-    print("demo $topic $message");
   }
 }
