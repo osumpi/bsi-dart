@@ -74,7 +74,6 @@ class BSI {
   void unhook(Service service) =>
       hookedServices.remove(service.reference)?.close();
 
-  void onReceiveCallback(String topic, String message) {
-    hookedServices[topic]?.add(message);
-  }
+  void onReceiveCallback(String topic, String message) =>
+      hookedServices[topic]?.add(message);
 }
