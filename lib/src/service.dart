@@ -7,6 +7,7 @@ abstract class Service {
   /// related to [context].
   Service() {
     BSI.instance.hook(reference, sink: _onReceiveSink);
+    _onReceive.listen(handleServiceMessage);
   }
 
   /// Provides a handle for BakeCode services.
@@ -17,10 +18,15 @@ abstract class Service {
   /// The reference to the [state]s of the service.
   ServiceReference get states => reference['state'];
 
-  /// Exposes all incoming messages for this service.
+  /// Exposes all incoming messages on this service.
   ///
   /// Listen to messages that is addressed to this service.
-  Stream<String> get onReceive => _onReceiveController.stream;
+  Stream<String> get _onReceive => _onReceiveController.stream;
+
+  /// Handles the service message.
+  @mustCallSuper
+  @protected
+  void handleServiceMessage(String message) {}
 
   static const _defaultSendOptions =
       const SendOptions(important: true, retain: false);
