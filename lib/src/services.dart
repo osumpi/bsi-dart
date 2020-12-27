@@ -10,6 +10,9 @@ abstract class Services {
   /// of this root service.
   static final BakeCode = ServiceReference.root('bakecode');
 
+  /// The end point devices [Service] where all devices are accessible.
+  static final EndPointDevices = ServiceReference.root('dev');
+
   /// The hardware service, where all hardware types can be instantiated to.
   static final Hardwares = BakeCode.child('hardwares');
 
