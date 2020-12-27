@@ -60,6 +60,8 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
   }
 }
 
+abstract class HardwareEndPoint {}
+
 // abstract class HardwareEndPoint {}
 
 // class SCARA extends Hardware {
