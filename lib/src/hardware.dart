@@ -31,7 +31,7 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
   T get hardware => _hardware;
   T _hardware;
 
-  String id;
+  String uuid;
 
   HardwareInstance() {
     hardware._instances.add(this);
@@ -42,7 +42,7 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
     @required String id,
   }) {
     this._hardware = hardware;
-    this.id = id;
+    this.uuid = id;
   }
 
   @override
@@ -51,7 +51,7 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
   }
 
   @override
-  ServiceReference get reference => hardware.reference[id];
+  ServiceReference get reference => hardware.reference[uuid];
   // TODO: add uuid
 
   @override
