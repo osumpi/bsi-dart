@@ -60,7 +60,13 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
   }
 }
 
-abstract class HardwareEndPoint {}
+class Device extends Service {
+  ServiceReference get reference => Services.Devices.child(uuid);
+
+  final String uuid;
+
+  Device(this.uuid);
+}
 
 // abstract class HardwareEndPoint {}
 
