@@ -10,4 +10,3 @@ dependencies:
   meta:
   mqtt_client:
   equatable:
-  args:
