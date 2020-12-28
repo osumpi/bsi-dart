@@ -33,21 +33,23 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
 
   String uuid;
 
+  ServiceReference get endPoint => Services.Devices[uuid];
+
   HardwareInstance() {
     hardware._instances.add(this);
   }
 
   void initialize({
     @required T hardware,
-    @required String id,
+    @required String uuid,
   }) {
     this._hardware = hardware;
-    this.uuid = id;
+    this.uuid = uuid;
   }
 
   @override
   void initState() {
-    // super.initState();
+    super.initState();
   }
 
   @override
@@ -66,25 +68,26 @@ class Device extends Service {
   final String uuid;
 
   Device(this.uuid);
+
+  @override
+  void handleServiceMessage(String message) {
+    super.handleServiceMessage(message);
+
+    // try {
+    //   var map = jsonDecode(message);
+
+    //   if (map is Map) {
+    //     if (map.containsKey('type')) {
+    //       if (map['type'] == 'RPC') {
+    //         // TODO: RPC
+    //       }
+    //     }
+    //   }
+    // } catch (e) {}
+
+    // RPC.create('move', {'px': 32, 'py': 44});
+
+    // TODO: register RPC, from device.
+    // TODO: support RPC as ServiceMessage and dispatch on receive.
+  }
 }
-
-// abstract class HardwareEndPoint {}
-
-// class SCARA extends Hardware {
-//   @override
-//   String get name => 'Dispenser';
-
-//   @override
-//   String get description =>
-//       "Dispense dispensable entities to a dispensable container";
-
-//   @override
-//   _SCARAInstance createInstance() => _SCARAInstance();
-// }
-
-// class _SCARAInstance extends HardwareInstance<SCARA> {
-//   final isOnline = State('isOnline');
-
-//   _SCARAInstance() {}
-
-// }
