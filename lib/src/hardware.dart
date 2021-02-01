@@ -1,17 +1,17 @@
 part of bsi;
 
-abstract class Hardware extends Service {
+abstract class DeviceType extends Service {
   String get name;
   String get description;
 
   @override
   ServiceReference get reference => Services.Hardwares[name];
 
-  final _instances = <HardwareInstance>[];
+  final _instances = <Device>[];
 
-  Iterable<HardwareInstance> get instances => _instances;
+  Iterable<Device> get instances => _instances;
 
-  HardwareInstance createInstance();
+  Device createInstance();
 
   @override
   void initState() {
@@ -27,23 +27,23 @@ abstract class Hardware extends Service {
   }
 }
 
-abstract class HardwareInstance<T extends Hardware> extends Service {
-  T get hardware => _hardware;
-  T _hardware;
+abstract class Device<T extends DeviceType> extends Service {
+  T get deviceType => _deviceType;
+  T _deviceType;
 
   String uuid;
 
   ServiceReference get endPoint => Services.Devices[uuid];
 
-  HardwareInstance() {
-    hardware._instances.add(this);
+  Device() {
+    deviceType._instances.add(this);
   }
 
   void initialize({
     @required T hardware,
     @required String uuid,
   }) {
-    this._hardware = hardware;
+    this._deviceType = hardware;
     this.uuid = uuid;
   }
 
@@ -53,8 +53,7 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
   }
 
   @override
-  ServiceReference get reference => hardware.reference[uuid];
-  // TODO: add uuid
+  ServiceReference get reference => deviceType.reference[uuid];
 
   @override
   void handleServiceMessage(String message) {
@@ -62,16 +61,65 @@ abstract class HardwareInstance<T extends Hardware> extends Service {
   }
 }
 
-class Device extends Service {
+class EndPointDevice extends Service {
   ServiceReference get reference => Services.Devices.child(uuid);
 
   final String uuid;
 
-  Device(this.uuid);
+  EndPointDevice(this.uuid);
 
+  Future<void> endPointMoveForward(int steps) async {
+    send(
+      'moving forward $steps steps',
+      destinations: [Services.BakeCode],
+    );
+
+    await Future.delayed(Duration(seconds: steps));
+
+    send(
+      "move forward $steps steps completed.",
+      destinations: [Services.BakeCode],
+    );
+  }
+
+  /// Handles Example Message of structure:
+  ///
+  /// in JSON
+  /// ```json
+  /// {
+  ///   "RPC_EVENT": {
+  ///     "command": "mv_fd",
+  ///     "args": {
+  ///       "steps": 10
+  ///     },
+  ///   },
+  /// }
+  /// ```
+  ///
+  /// in YAML
+  /// ```yaml
+  /// RPC_EVENT:
+  ///   command: mv_fd
+  ///   args:
+  ///     steps: 10
+  /// ```
+  ///
   @override
   void handleServiceMessage(String message) {
     super.handleServiceMessage(message);
+
+    var event = jsonDecode(message) as Map<String, dynamic>;
+
+    if (event['RPC_EVENT'] != null) {
+      var rpcEvent = jsonDecode(event['RPC_EVENT']) as Map<String, dynamic>;
+
+      var command = rpcEvent['command'];
+      var args = rpcEvent['args'] as Map<String, dynamic>;
+
+      if (command == "mv_fd") {
+        endPointMoveForward(args['steps']);
+      }
+    }
 
     // try {
     //   var map = jsonDecode(message);
@@ -89,5 +137,31 @@ class Device extends Service {
 
     // TODO: register RPC, from device.
     // TODO: support RPC as ServiceMessage and dispatch on receive.
+
+    // TODO: support for dynamic RPC based on JSON_RPC guide
   }
+
+  void moveForward({@required int steps}) {
+    send("""
+  RPC_EVENT:
+    command: mv_fd
+    args:
+      steps: 10""", destinations: [Services.BakeCode]);
+
+    var event = RPC.create(
+      command: 'mv_fd',
+      args: {
+        "steps": 10,
+      },
+    );
+
+    send('$event', destinations: [Services.BakeCode]);
+  }
+}
+
+class RPC {
+  RPC.create({
+    @required String command,
+    @required Map<String, dynamic> args,
+  });
 }

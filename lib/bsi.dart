@@ -21,3 +21,11 @@ part 'src/services.dart';
 part 'src/state.dart';
 part 'src/outgoing_message.dart';
 part 'src/hardware.dart';
+
+// TODO: pub upgrade runtime
+// TODO: change BSI readme to use latest BSI.initialize()
+// TODO: have sample BSI config loading and auth data loading
+// TODO: remove deprecated ServiceMessage and notify functions
+// TODO: use yaml_encode after makig packg
+// TODO: previously made json messages can be ignored as json is valid yaml
+// TODO: update readme's onReceive.print.
