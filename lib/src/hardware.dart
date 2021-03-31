@@ -28,20 +28,20 @@ abstract class DeviceType extends Service {
 }
 
 abstract class Device<T extends DeviceType> extends Service {
-  T get deviceType => _deviceType;
-  T _deviceType;
+  T? get deviceType => _deviceType;
+  T? _deviceType;
 
-  String uuid;
+  late String uuid;
 
   ServiceReference get endPoint => Services.Devices[uuid];
 
   Device() {
-    deviceType._instances.add(this);
+    deviceType!._instances.add(this);
   }
 
   void initialize({
-    @required T hardware,
-    @required String uuid,
+    required T hardware,
+    required String uuid,
   }) {
     this._deviceType = hardware;
     this.uuid = uuid;
@@ -53,7 +53,7 @@ abstract class Device<T extends DeviceType> extends Service {
   }
 
   @override
-  ServiceReference get reference => deviceType.reference[uuid];
+  ServiceReference get reference => deviceType!.reference[uuid];
 
   @override
   void handleServiceMessage(String message) {
@@ -114,10 +114,10 @@ class EndPointDevice extends Service {
       var rpcEvent = jsonDecode(event['RPC_EVENT']) as Map<String, dynamic>;
 
       var command = rpcEvent['command'];
-      var args = rpcEvent['args'] as Map<String, dynamic>;
+      var args = rpcEvent['args'] as Map<String, dynamic>?;
 
       if (command == "mv_fd") {
-        endPointMoveForward(args['steps']);
+        endPointMoveForward(args!['steps']);
       }
     }
 
@@ -141,7 +141,7 @@ class EndPointDevice extends Service {
     // TODO: support for dynamic RPC based on JSON_RPC guide
   }
 
-  void moveForward({@required int steps}) {
+  void moveForward({required int steps}) {
     send("""
   RPC_EVENT:
     command: mv_fd
@@ -161,7 +161,7 @@ class EndPointDevice extends Service {
 
 class RPC {
   RPC.create({
-    @required String command,
-    @required Map<String, dynamic> args,
+    required String command,
+    required Map<String, dynamic> args,
   });
 }

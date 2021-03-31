@@ -5,13 +5,13 @@ class State {
   /// [identifier] string for the state.
   final String identifier;
 
-  final void Function(String value) onChange;
+  final void Function(String value)? onChange;
 
   /// Create a [State] with an identifier as string.
   State(this.identifier, {this.onChange});
 
   /// The value of the state.
-  String _value;
+  String? _value;
 
   @protected
   set value(String value) {

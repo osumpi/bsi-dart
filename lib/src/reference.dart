@@ -6,7 +6,7 @@ class ServiceReference extends Equatable {
   /// The ServiceReference of the parent of this ServiceReference.
   ///
   /// Null if root.
-  final ServiceReference parent;
+  final ServiceReference? parent;
 
   /// Name of the Service.
   ///
@@ -38,7 +38,7 @@ class ServiceReference extends Equatable {
   /// ```dart
   /// var root = ServiceReference.root('bakecode');
   /// ```
-  ServiceReference(this.name, {@required this.parent})
+  ServiceReference(this.name, {required this.parent})
       : assert(name.contains('/') == false),
         assert(name.contains(' ') == false),
         assert(name != null);
@@ -117,7 +117,7 @@ class ServiceReference extends Equatable {
   /// ('bakecode/eco/hw' as ServiceReference).depth == 2;
   /// ('bakecode' as ServiceReference).depth == 0;
   /// ```
-  int get depth => isRoot ? 0 : (parent.depth + 1);
+  int get depth => isRoot ? 0 : (parent!.depth + 1);
 
   /// Root ServiceReference.
   ///

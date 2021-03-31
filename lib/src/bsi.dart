@@ -28,7 +28,7 @@ class BSI {
   ///
   /// Future completes after initializing and returns the current
   /// [MqttClientConnectionStatus].
-  Future<MqttClientConnectionStatus> initialize(
+  Future<MqttClientConnectionStatus?> initialize(
     BSIConfiguration config,
   ) async =>
       await Mqtt.instance.initialize(using: config);
@@ -65,7 +65,7 @@ class BSI {
 
   final hookedServices = <String, StreamSink<String>>{};
 
-  void hook(ServiceReference reference, {@required StreamSink<String> sink}) =>
+  void hook(ServiceReference reference, {required StreamSink<String> sink}) =>
       hookedServices.putIfAbsent('$reference', () {
         Mqtt.instance.subscribe('$reference');
         return sink;

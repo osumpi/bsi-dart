@@ -19,8 +19,8 @@ class Mqtt {
 
   /// Initialize the MQTT layer by specifying [using] with the [BSIConfiguration]
   /// specifications.
-  Future<MqttClientConnectionStatus> initialize({
-    @required BSIConfiguration using,
+  Future<MqttClientConnectionStatus?> initialize({
+    required BSIConfiguration using,
   }) async {
     if (using.auth_username == null || using.auth_password == null) {
       log('WARNING: No authentication.');
@@ -61,7 +61,7 @@ class Mqtt {
   }
 
   /// Connects the [client] to the broker.
-  Future<MqttClientConnectionStatus> connect() async {
+  Future<MqttClientConnectionStatus?> connect() async {
     try {
       return await client.connect();
     } on NoConnectionException catch (e, s) {
@@ -79,7 +79,7 @@ class Mqtt {
       BSI().onReceiveCallback(
         packet.topic,
         MqttPublishPayload.bytesToStringAsString(
-            (packet.payload as MqttPublishMessage).payload.message),
+            (packet.payload as MqttPublishMessage).payload.message!),
       );
 
   /// Enqueue failed subscription topics which shall be dequeued onConnect;
@@ -114,7 +114,7 @@ class Mqtt {
     if (firstTime) {
       _mySubscriptions.forEach(subscribe);
 
-      client.updates.listen((e) => onReceive(e[0]));
+      client.updates!.listen((e) => onReceive(e[0]));
 
       firstTime = false;
     }
@@ -139,20 +139,20 @@ class Mqtt {
   /// [message] when a client subscribes to the [topic].
   int publish(
     String message, {
-    @required String topic,
+    required String topic,
     bool shouldRetain = false,
     MqttQos qos = MqttQos.atLeastOnce,
   }) =>
       client.publishMessage(
         topic,
         qos,
-        (MqttClientPayloadBuilder()..addString(message)).payload,
+        (MqttClientPayloadBuilder()..addString(message)).payload!,
         retain: shouldRetain,
       );
 
   /// Updates the `_connectionStateStreamController` w/ latest state.
   void updateConnectionState() =>
-      _connectionStateStreamController.sink.add(client.connectionStatus.state);
+      _connectionStateStreamController.sink.add(client.connectionStatus!.state);
 
   /// `StreamController` for `client`'s connection state.
   final _connectionStateStreamController =

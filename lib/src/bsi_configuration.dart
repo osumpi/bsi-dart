@@ -60,8 +60,8 @@ class BSIConfiguration {
   /// * Authentication credentials can be specified using
   /// [auth_username] & [auth_password].
   const BSIConfiguration.from({
-    @required this.representingService,
-    @required this.broker,
+    required this.representingService,
+    required this.broker,
     this.port = 1883,
     this.auth_username = '',
     this.auth_password = '',

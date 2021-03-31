@@ -37,7 +37,7 @@ abstract class Service {
   @nonVirtual
   void send(
     String message, {
-    @required Iterable<ServiceReference> destinations,
+    required Iterable<ServiceReference> destinations,
     SendOptions options = _defaultSendOptions,
   }) =>
       BSI.instance.outbox.add(_OutgoingMessage(

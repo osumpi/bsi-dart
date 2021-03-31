@@ -47,9 +47,9 @@ class _OutgoingMessage {
 
   const _OutgoingMessage(
     this.message, {
-    @required this.source,
-    @required this.destinations,
-    @required this.options,
+    required this.source,
+    required this.destinations,
+    required this.options,
   });
 
   @override
