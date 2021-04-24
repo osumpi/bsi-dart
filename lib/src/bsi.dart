@@ -24,14 +24,14 @@ class BSI {
     });
   }
 
-  /// Initialize the BSI instance with the provided [config].
+  /// Initialize the [BSI] layer with the provided [specifications].
   ///
   /// Future completes after initializing and returns the current
   /// [MqttClientConnectionStatus].
-  Future<MqttClientConnectionStatus?> initialize(
-    BSISpecifications config,
-  ) async =>
-      await Mqtt.instance.initialize(using: config);
+  Future<MqttClientConnectionStatus?> initialize({
+    required BSISpecifications specifications,
+  }) async =>
+      await Mqtt.instance.initialize(using: specifications);
 
   /// The singleton instance of BakeCode Services Interconnect Layer.
   static final instance = BSI._();
