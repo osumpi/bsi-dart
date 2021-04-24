@@ -17,15 +17,10 @@ class Mqtt {
   /// QOS to be used for all messages.
   static const MqttQos qos = MqttQos.exactlyOnce;
 
-  /// Initialize the MQTT layer by specifying [using] with the [BSIConfiguration]
-  /// specifications.
+  /// Initialize the MQTT layer by specifying [using] with [BSISpecifications].
   Future<MqttClientConnectionStatus?> initialize({
-    required BSIConfiguration using,
+    required BSISpecifications using,
   }) async {
-    if (using.auth_username == null || using.auth_password == null) {
-      log('WARNING: No authentication.');
-    }
-
     client
       ..server = using.broker
       ..port = using.port

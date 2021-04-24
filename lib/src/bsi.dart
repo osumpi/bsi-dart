@@ -29,7 +29,7 @@ class BSI {
   /// Future completes after initializing and returns the current
   /// [MqttClientConnectionStatus].
   Future<MqttClientConnectionStatus?> initialize(
-    BSIConfiguration config,
+    BSISpecifications config,
   ) async =>
       await Mqtt.instance.initialize(using: config);
 

@@ -6,12 +6,11 @@ part of bsi;
 /// This class contains all parameters required for establishing a MQTT
 /// connection to the broker.
 @immutable
-class BSIConfiguration {
-  /// The brokers address.
+class BSISpecifications {
+  /// The address of the broker that the BSI layer shall use for communicating.
   ///
   /// *Example:*
   /// ```dart
-  /// var broker = "192.168.0.5";
   /// ```
   final String broker;
 
@@ -59,7 +58,7 @@ class BSIConfiguration {
   /// * MQTT broker's [port] number. default: `1883`.
   /// * Authentication credentials can be specified using
   /// [auth_username] & [auth_password].
-  const BSIConfiguration.from({
+  const BSISpecifications.from({
     required this.representingService,
     required this.broker,
     this.port = 1883,
