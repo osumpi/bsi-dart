@@ -14,7 +14,7 @@ import 'src/misc.dart';
 
 part 'src/bsi.dart';
 part 'src/mqtt.dart';
-part 'src/bsi_configuration.dart';
+part 'src/bsi_specifications.dart';
 part 'src/reference.dart';
 part 'src/service.dart';
 part 'src/services.dart';
