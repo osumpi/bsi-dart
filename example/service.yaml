@@ -1,0 +1,42 @@
+# The name of the service that is visible to every entities in the ecosystem.
+name: My Service
+
+# A brief about this service.
+description: A custom service implementation
+
+# A unique identifier (UUID) of this service.
+id: b06ec6bf-db64-4270-872a-56b5c7438bcb
+
+# Whether this service is a singleton service (single instance only) or not.
+#
+# Setting the value to `true` (which is the default), BSI disallows multiple
+# instances of this service to exist in the same ecosystem. When the service
+# is being initialized, it checks for whether a service with the same id is 
+# already running in the ecosystem or not. If any service with the same id 
+# is found, the initialization of this service will not be completed.
+#
+# Setting the value to `false` allows multiple instances of this service to 
+# exist in the ecosystem. The id of an instance of the service will be 
+# followed by its hashcode. Eg: efd8a474-1ede-4801-8228-1043f8b8532b#882219
+singleton: true
+
+# Address to the MQTT server where the ecosystem can be accessed.
+# Ignore to use mDNS discovery.
+server: xtensablade.ddns.net
+
+# Expected value: 1~65535 (defaults to: 8080)
+port: 8080
+
+# Expected value: { websocket, tcp } (defaults to: websocket)
+protocol: websocket
+
+# Username to be used for MQTT Server Authentication
+username: ""
+
+# Password to be used for MQTT Server Authentication
+password: ""
+
+# The default location of the service.
+# Ignore to use `outlanders`, which will be shown in OsumPie's ecosystem
+# editor app.
+location: services/custom

@@ -1,74 +1,76 @@
-part of bsi;
+part of bakecode.core;
 
-abstract class Service {
-  /// Default constructor for [Service].
-  ///
-  /// Registers onMessage stream controller's sink for listening to messages
-  /// related to [context].
-  Service() {
-    BSI.instance.hook(reference, sink: _onReceiveSink);
-    _onReceive.listen(handleServiceMessage);
+enum ServiceActivityStatus { active, inactive }
+
+abstract class Service extends BSI {
+  Service(this.configFile);
+
+  final File configFile;
+
+  @override
+  late final ServiceConfig config;
+
+  @nonVirtual
+  @override
+  late final address = _getAddress();
+
+  Address _getAddress() {
+    // Change camel case to snake case
+    var value = '$runtimeType'
+        .replaceAllMapped(RegExp('(?<=[a-z])[A-Z]'), (m) => '_${m.group(0)}')
+        .toLowerCase();
+
+    if (config.location.value.isNotEmpty) {
+      value = '${config.location}/$value';
+    }
+
+    if (!config.isSingleton) {
+      value = '$value-${config.id}';
+    }
+
+    return Address(value);
   }
 
-  /// Provides a handle for BakeCode services.
-  ///
-  /// Path makes every [Service]s to be identifiable.
-  ServiceReference get reference;
+  @override
+  Future<bool> initialize() async {
+    if (!await configFile.exists()) {
+      throw Exception('$configFile does not exist.');
+    }
 
-  /// The reference to the [state]s of the service.
-  ServiceReference get states => reference['state'];
+    config = ServiceConfig.loadFromYaml(await configFile.readAsString());
 
-  /// Exposes all incoming messages on this service.
-  ///
-  /// Listen to messages that is addressed to this service.
-  Stream<String> get _onReceive => _onReceiveController.stream;
+    return super.initialize();
+  }
 
-  /// Handles the service message.
+  @override
+  late final isActive = state<ServiceActivityStatus>('active');
+
+  late final id = state<UuidValue>('id');
+
+  late final name = state<String>('name');
+
+  late final description = state<String>('description');
+
+  late final isSingleton = state<bool>('singleton');
+
+  @override
+  void initState() {
+    super.initState();
+
+    id.set(config.id);
+    name.set(config.name);
+    description.set(config.description);
+    isSingleton.set(config.isSingleton);
+    isActive.set(ServiceActivityStatus.active);
+  }
+
   @mustCallSuper
-  @protected
-  void handleServiceMessage(String message) {}
+  @override
+  void onMessageReceived(ServiceMessage message) {
+    // TODO: handle core stuffs.
+  }
 
-  static const _defaultSendOptions =
-      const SendOptions(important: true, retain: false);
-
-  /// Sends the message to the destinations specified in the message.
-  ///
-  /// Sends by adding the message to the [BSI.instance]'s outbox.
-  @nonVirtual
-  void send(
-    String message, {
-    required Iterable<ServiceReference> destinations,
-    SendOptions options = _defaultSendOptions,
-  }) =>
-      BSI.instance.outbox.add(_OutgoingMessage(
-        message,
-        source: reference,
-        destinations: destinations,
-        options: options,
-      ));
-
-  /// Sink of [_onReceiveController].
-  StreamSink<String> get _onReceiveSink => _onReceiveController.sink;
-
-  /// Stream controller for on message events.
-  final _onReceiveController = StreamController<String>();
-
-  /// Update [State]s of the service.
-  @protected
-  @nonVirtual
-  void set(Map<State, dynamic> diff) => diff
-    // Filters out unchanged states.
-    ..removeWhere((state, newValue) => '$state' == '$newValue')
-    // Updates every state that has change.
-    ..forEach((state, newValue) {
-      state.value = '$newValue';
-      send(
-        '$newValue',
-        destinations: [states[state.identifier]],
-      ); // TODO: conditionally modify send Options.
-    });
-
-  @protected
-  @mustCallSuper
-  void initState() {}
+  State<T> state<T>(String key) {
+    return State<T>._(key: key, of: this);
+  }
 }

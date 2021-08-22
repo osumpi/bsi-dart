@@ -1,29 +1,26 @@
-part of bsi;
+part of bakecode.core;
 
-/// State of a Service.
-class State {
-  /// [identifier] string for the state.
-  final String identifier;
+class State<T> {
+  State._({
+    required String key,
+    required this.of,
+  }) : address = Address('${of.address}/$key');
 
-  final void Function(String value)? onChange;
+  final Service of;
 
-  /// Create a [State] with an identifier as string.
-  State(this.identifier, {this.onChange});
+  final Address address;
 
-  /// The value of the state.
-  String? _value;
+  T? _value;
 
-  @protected
-  set value(String value) {
+  T? get get => _value;
+
+  void set(T value) {
     if (value == _value) return;
 
-    onChange?.call(_value = value);
+    of._publish(
+      topic: address.value,
+      message: (_value = value).toString(),
+      shouldRetain: true,
+    );
   }
-
-  /// The value of the state.
-  @nonVirtual
-  String get value => '$_value';
-
-  @override
-  String toString() => value;
 }
