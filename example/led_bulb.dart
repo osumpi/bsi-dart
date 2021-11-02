@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:core/core.dart';
+import 'package:bsi_dart/bsi.dart';
 
 Future<void> main(List<String> args) async {
   final configFile = File('example/service.yaml');
