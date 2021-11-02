@@ -1,8 +1,8 @@
-# BakeCode Services Interconnect Layer (Dart API)
+# BakeCode Services Interconnect (Dart API)
 
 A rich decentralized Service Oriented Architecture (SOA) implementation.
 
-To interact with a BakeCode Ecosystem, BSI shall be used because it
+To interact with the BakeCode Ecosystem, BSI shall be used because it
 makes sure that the messages sent are structured in the desired way for
 easy processing by the receiving entities and also implements many other
 functionalities of and for SOA.
